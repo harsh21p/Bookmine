@@ -24,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Wait For a Min.",Toast.LENGTH_SHORT).show();
-                String s = editText.getText().toString();
-                int a = Integer.parseInt(s);
+                Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
+               // String s = editText.getText().toString();
+               // int a = Integer.parseInt(s);
 
 
             }
