@@ -9,10 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText editText;
     private Button button;
+    //FireBase
+   // private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
+
     public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
 
     @Override
@@ -22,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         //mycode
 
-        button = findViewById(R.id.button);
+      //  button = findViewById(R.id.button);
        // button.setOnClickListener(new View.OnClickListener() {
           //  @Override
         //    public void onClick(View v) {
