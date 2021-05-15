@@ -13,15 +13,16 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editText;
     private Button button;
+    public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //mycode
-        editText = findViewById(R.id.editTextTextPersonName);
-        button = findViewById(R.id.button);
 
+        button = findViewById(R.id.button);
        // button.setOnClickListener(new View.OnClickListener() {
           //  @Override
         //    public void onClick(View v) {
@@ -40,7 +41,13 @@ public class MainActivity extends AppCompatActivity {
     {
         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity2.class);
+
+        editText = findViewById(R.id.editTextTextPersonName);
+        String searchContent = editText.getText().toString();
+        intent.putExtra(EXTRA_NAME,searchContent);
         startActivity(intent);
+
+
     }
 
 
