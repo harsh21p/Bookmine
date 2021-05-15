@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="56dp"
+        android:onClick="openActivity2"
         android:text="Sreach"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -55,10 +56,11 @@
         android:id="@+id/textView3"
         android:layout_width="88dp"
         android:layout_height="16dp"
-        android:layout_marginBottom="56dp"
-        android:text="BOOKMINE®"
+        android:layout_marginBottom="36dp"
+        android:text=" BOOKMINE®"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="@+id/textView2" />
 
     <ImageView
