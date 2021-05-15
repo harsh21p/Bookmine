@@ -9,6 +9,7 @@ import android.widget.TextView;
 public class BOOKMINE3 extends AppCompatActivity {
     TextView secondPageSearchContent3;
     String searchContent2;
+    public static final String EXTRA_TEXT_LAST = "com.example.bookmine.extra.last";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

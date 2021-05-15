@@ -2,6 +2,7 @@ package com.example.bookmine;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ public class MainActivity2 extends AppCompatActivity {
     TextView secondPageSearchContent;
     String searchContent;
     public static final String EXTRA_TEXT2 = "Extra.search.for.third.page";
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +23,7 @@ public class MainActivity2 extends AppCompatActivity {
         secondPageSearchContent =findViewById(R.id.searchText);
         Intent intent = getIntent();
         searchContent = intent.getStringExtra(MainActivity.EXTRA_NAME);
-        secondPageSearchContent.setText("You Searching For : "+searchContent);
+        secondPageSearchContent.setText( "You Searching For : " + searchContent);
 
     }
     public void openActivity3(View view)
