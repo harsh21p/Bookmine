@@ -9,36 +9,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BOOKMINE">
-
-        //FIRST PAGE
-
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
-        //SECOND PAGE
-
         <activity
             android:name=".MainActivity2"
             android:label="BOOKMINE2"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
-
-        //THIRD PAGE
+            android:parentActivityName=".MainActivity"></activity>
         <activity
             android:name=".BOOKMINE3"
             android:label="BOOKMINE3"
             android:parentActivityName=".MainActivity2">
             >
-
         </activity>
+        <activity android:name=".SplashScreen"
+            android:theme="@style/SplashScreen">
+            <intent-filter>
 
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
