@@ -18,6 +18,7 @@ public class MainActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+        getSupportActionBar().hide();
 
         //my code
         secondPageSearchContent =findViewById(R.id.searchText);

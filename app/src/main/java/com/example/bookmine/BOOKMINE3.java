@@ -14,6 +14,7 @@ public class BOOKMINE3 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_b_o_o_k_m_i_n_e3);
+        getSupportActionBar().hide();
 
         //My code
 
