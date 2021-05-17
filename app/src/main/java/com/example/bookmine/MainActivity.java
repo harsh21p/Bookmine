@@ -1,5 +1,6 @@
  package com.example.bookmine;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,15 +8,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+ public class MainActivity extends AppCompatActivity {
 
-    private EditText editText;
-    private Button button;
+     String z;
     //FireBase
    // private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
 
@@ -46,16 +50,28 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
     public void openActivity2(View view)
     {
-        Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity2.class);
 
-        editText = findViewById(R.id.editTextTextPersonName);
-        String searchContent = editText.getText().toString();
-        intent.putExtra(EXTRA_NAME,searchContent);
-        startActivity(intent);
 
+        DatabaseReference reff= FirebaseDatabase.getInstance().getReference().child("8962");
+        reff.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                 z = snapshot.child("author").getValue().toString();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
