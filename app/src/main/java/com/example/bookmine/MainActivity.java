@@ -15,32 +15,34 @@
  import com.google.firebase.database.FirebaseDatabase;
  import com.google.firebase.database.ValueEventListener;
 
+ import java.util.Objects;
+
  public class MainActivity extends AppCompatActivity {
 
-     private SearchView editText;
-     private String z;
+     private SearchView searchView;
+     private String author;
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
     }
 
-    public void openActivity2(View view)
+    public void onClick(View view)
     {
 
 
-        DatabaseReference reff= FirebaseDatabase.getInstance().getReference().child("Books").child("1");
-        reff.addValueEventListener(new ValueEventListener() {
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Books").child("1");
+        reference.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                editText= findViewById(R.id.editTextTextPersonName);
-                 z = snapshot.child("author").getValue().toString();
-                 editText.setQuery(z,false);
+                searchView= findViewById(R.id.search_field);
+                author = Objects.requireNonNull(snapshot.child("author").getValue()).toString();
+                searchView.setQuery(author,false);
             }
 
             @Override
@@ -51,8 +53,8 @@
 
         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity2.class);
-        editText= findViewById(R.id.editTextTextPersonName);
-        String searchContent = editText.getQuery().toString();
+        searchView= findViewById(R.id.search_field);
+        String searchContent = searchView.getQuery().toString();
         intent.putExtra(EXTRA_NAME,searchContent);
         startActivity(intent);
 
