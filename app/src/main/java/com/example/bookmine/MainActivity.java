@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import com.google.firebase.database.ValueEventListener;
  public class MainActivity extends AppCompatActivity {
 
      String z;
-     private EditText editText;
+     private SearchView editText;
 
     //FireBase
    // private DatabaseReference root = FirebaseDatabase.getInstance().getReference().getRoot();
@@ -66,7 +67,7 @@ import com.google.firebase.database.ValueEventListener;
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 editText= findViewById(R.id.editTextTextPersonName);
                  z = snapshot.child("author").getValue().toString();
-                 editText.setText(z);
+                 editText.setQuery(z,false);
 
 
             }
@@ -80,7 +81,7 @@ import com.google.firebase.database.ValueEventListener;
         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity2.class);
         editText= findViewById(R.id.editTextTextPersonName);
-        String searchContent = editText.getText().toString();
+        String searchContent = editText.getQuery().toString();
         intent.putExtra(EXTRA_NAME,searchContent);
         startActivity(intent);
 
