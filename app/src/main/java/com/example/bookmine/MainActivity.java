@@ -11,6 +11,7 @@
  import androidx.recyclerview.widget.LinearLayoutManager;
  import androidx.recyclerview.widget.RecyclerView;
 
+ import com.firebase.ui.database.FirebaseRecyclerOptions;
  import com.google.firebase.database.DataSnapshot;
  import com.google.firebase.database.DatabaseError;
  import com.google.firebase.database.DatabaseReference;
@@ -25,6 +26,7 @@
      private String author;
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
      RecyclerView recview;
+     myadaper adapter;
 
 
     @Override
@@ -36,7 +38,28 @@
         recview=findViewById(R.id.recycler_view);
         recview.setLayoutManager(new LinearLayoutManager(this));
 
+        FirebaseRecyclerOptions<model> options =
+                new FirebaseRecyclerOptions.Builder<model>()
+                        .setQuery(FirebaseDatabase.getInstance().getReference().child("students"), model.class)
+                        .build();
+
+        adapter=new myadaper(options);
+        recview.setAdapter(adapter);
+
+
     }
+
+     @Override
+     protected void onStart() {
+         super.onStart();
+         adapter.startListening();
+     }
+
+     @Override
+     protected void onStop() {
+         super.onStop();
+         adapter.stopListening();
+     }
 
     public void onClick(View view)
     {
