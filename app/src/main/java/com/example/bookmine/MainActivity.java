@@ -8,6 +8,7 @@
 
  import androidx.annotation.NonNull;
  import androidx.appcompat.app.AppCompatActivity;
+ import androidx.recyclerview.widget.LinearLayoutManager;
  import androidx.recyclerview.widget.RecyclerView;
 
  import com.google.firebase.database.DataSnapshot;
@@ -23,6 +24,8 @@
      private SearchView searchView;
      private String author;
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
+     RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,35 +33,38 @@
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-    }
-
-    public void onClick(View view)
-    {
-
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Books").child("1");
-        reference.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                searchView= findViewById(R.id.search_field);
-                author = Objects.requireNonNull(snapshot.child("author").getValue()).toString();
-                searchView.setQuery(author,false);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity2.class);
-        searchView= findViewById(R.id.search_field);
-        String searchContent = searchView.getQuery().toString();
-        intent.putExtra(EXTRA_NAME,searchContent);
-        startActivity(intent);
+        recyclerView=findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
+
+//    public void onClick(View view)
+//    {
+//
+//
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Books").child("1");
+//        reference.addValueEventListener(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                searchView= findViewById(R.id.search_field);
+//                author = Objects.requireNonNull(snapshot.child("author").getValue()).toString();
+//                searchView.setQuery(author,false);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//
+//        Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
+//        Intent intent = new Intent(this, MainActivity2.class);
+//        searchView= findViewById(R.id.search_field);
+//        String searchContent = searchView.getQuery().toString();
+//        intent.putExtra(EXTRA_NAME,searchContent);
+//        startActivity(intent);
+//
+//    }
 
 }
