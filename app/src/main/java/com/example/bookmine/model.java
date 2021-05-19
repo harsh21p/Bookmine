@@ -1,21 +1,22 @@
 package com.example.bookmine;
 
 public class model {
-    String name;
+    String author;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public model(String author) {
+        this.author = author;
+    }
 
     public model() {
 
     }
 
-    public model(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

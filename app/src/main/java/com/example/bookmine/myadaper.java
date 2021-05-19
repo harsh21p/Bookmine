@@ -19,7 +19,7 @@ public class myadaper extends FirebaseRecyclerAdapter<model,myadaper.myviewholde
 
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull model model) {
-        holder.name.setText(model.getName());
+        holder.author.setText(model.getAuthor());
 
     }
 
@@ -34,11 +34,11 @@ public class myadaper extends FirebaseRecyclerAdapter<model,myadaper.myviewholde
     class myviewholder extends RecyclerView.ViewHolder
      {
 
-         TextView name;
+         TextView author;
          public myviewholder(@NonNull View itemView)
          {
              super(itemView);
-             name = itemView.findViewById(R.id.nametext);
+             author = itemView.findViewById(R.id.nametext);
          }
      }
 }
