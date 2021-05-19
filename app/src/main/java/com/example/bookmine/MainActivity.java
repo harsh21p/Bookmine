@@ -21,10 +21,10 @@
 
  public class MainActivity extends AppCompatActivity {
 
-     private SearchView searchView;
+     private SearchView mSearchField;
      private String author;
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
-     RecyclerView recyclerView;
+     RecyclerView recview;
 
 
     @Override
@@ -33,38 +33,20 @@
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        recyclerView=findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recview=findViewById(R.id.recycler_view);
+        recview.setLayoutManager(new LinearLayoutManager(this));
 
     }
 
-//    public void onClick(View view)
-//    {
-//
-//
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Books").child("1");
-//        reference.addValueEventListener(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                searchView= findViewById(R.id.search_field);
-//                author = Objects.requireNonNull(snapshot.child("author").getValue()).toString();
-//                searchView.setQuery(author,false);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//
-//        Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
-//        Intent intent = new Intent(this, MainActivity2.class);
-//        searchView= findViewById(R.id.search_field);
-//        String searchContent = searchView.getQuery().toString();
-//        intent.putExtra(EXTRA_NAME,searchContent);
-//        startActivity(intent);
-//
-//    }
+    public void onClick(View view)
+    {
+        Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity2.class);
+        mSearchField= findViewById(R.id.search_field);
+        String searchContent = mSearchField.getQuery().toString();
+        intent.putExtra(EXTRA_NAME,searchContent);
+        startActivity(intent);
+
+    }
 
 }
