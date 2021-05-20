@@ -11,6 +11,7 @@
         android:layout_width="63dp"
         android:layout_height="63dp"
         android:layout_marginTop="76dp"
+        android:onClick="onClick"
         android:background="@mipmap/ic_launcher_search_btn_round"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
@@ -23,8 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
         android:iconifiedByDefault="false"
-        android:hint=" Author's Name"
-
+        android:queryHint=" Author's Name"
         android:background="@drawable/search_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -37,14 +37,14 @@
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="76dp"
+        android:background="@drawable/search_layout"
         android:ems="10"
-        android:padding="15dp"
         android:hint=" Filterbar"
         android:inputType="textPersonName"
-        android:background="@drawable/search_layout"
+        android:padding="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_field" />
 
@@ -157,7 +157,7 @@
         android:layout_width="match_parent"
         android:paddingHorizontal="30dp"
         android:paddingVertical="5dp"
-        android:layout_height="140dp"
+        android:layout_height="70dp"
 
         app:layout_constraintEnd_toEndOf="@+id/search_field"
         app:layout_constraintTop_toBottomOf="@+id/search_field" />

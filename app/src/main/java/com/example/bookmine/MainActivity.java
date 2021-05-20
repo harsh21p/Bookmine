@@ -45,18 +45,27 @@
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String searchText = mSearchField.getQuery().toString();
-                firebaseUserSearch(searchText);
-
-            }
-        });
-
+        search();
 
     }
 
+
+void search(){
+    mSearchField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        @Override
+        public boolean onQueryTextSubmit(String query) {
+            firebaseUserSearch(query);
+            return false;
+        }
+
+        @Override
+        public boolean onQueryTextChange(String newText) {
+            firebaseUserSearch(newText);
+            return false;
+        }
+    });
+
+}
      private void firebaseUserSearch(String searchText) {
 
          Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_LONG).show();
