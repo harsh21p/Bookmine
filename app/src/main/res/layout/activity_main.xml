@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
+    <ImageButton
         android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="63dp"
+        android:layout_height="63dp"
         android:layout_marginTop="76dp"
-        android:onClick="onClick"
+        android:background="@mipmap/ic_launcher_search_btn_round"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
@@ -19,11 +19,13 @@
 
     <SearchView
         android:id="@+id/search_field"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="88dp"
         android:iconifiedByDefault="false"
-        android:queryHint="Author's Name"
+        android:hint=" Author's Name"
+
+        android:background="@drawable/search_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,12 +35,14 @@
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:ems="10"
-        android:hint="Filterbar"
+        android:padding="15dp"
+        android:hint=" Filterbar"
         android:inputType="textPersonName"
+        android:background="@drawable/search_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,7 +153,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="300dp"
+
+        android:layout_width="match_parent"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="5dp"
         android:layout_height="140dp"
 
         app:layout_constraintEnd_toEndOf="@+id/search_field"

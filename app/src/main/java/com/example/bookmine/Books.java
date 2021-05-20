@@ -1,7 +1,10 @@
 package com.example.bookmine;
 
-public class model {
+public class Books {
     String author;
+
+    public Books() {
+    }
 
     public String getAuthor() {
         return author;
@@ -11,12 +14,7 @@ public class model {
         this.author = author;
     }
 
-    public model(String author) {
+    public Books(String author) {
         this.author = author;
     }
-
-    public model() {
-
-    }
-
 }
