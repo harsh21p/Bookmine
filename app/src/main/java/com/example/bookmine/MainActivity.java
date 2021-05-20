@@ -25,27 +25,26 @@
 
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
      private SearchView mSearchField;
-     private ImageButton mSearchBtn;
      RecyclerView mResultList;
      DatabaseReference mUserDatabase;
-
-
-    @Override
+     EditText mFilterBar;
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
+        mFilterBar=findViewById(R.id.editTextTextPersonName2);
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference("Books");
 
         mSearchField=findViewById(R.id.search_field);
-        mSearchBtn=findViewById(R.id.search_button);
 
         mResultList=findViewById(R.id.recycler_view);
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
         search();
+
 
     }
 
@@ -61,6 +60,7 @@ void search(){
         @Override
         public boolean onQueryTextChange(String newText) {
             firebaseUserSearch(newText);
+
             return false;
         }
     });
@@ -68,7 +68,7 @@ void search(){
 }
      private void firebaseUserSearch(String searchText) {
 
-         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_LONG).show();
+         //Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_LONG).show();
 
          Query firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(searchText).endAt(searchText+"\uf8ff");
 
@@ -80,9 +80,14 @@ void search(){
          ) {
              @Override
              protected void populateViewHolder(UsersViewHolder usersViewHolder, Books books, int i) {
-
                  usersViewHolder.setDetails(books.getAuthor());
+                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         mSearchField.setQuery(books.getAuthor(),false);
 
+                     }
+                 });
              }
          };
          mResultList.setAdapter(firebaseRecyclerAdapter);

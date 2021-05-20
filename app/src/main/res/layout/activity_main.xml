@@ -10,11 +10,12 @@
         android:id="@+id/search_button"
         android:layout_width="63dp"
         android:layout_height="63dp"
-        android:layout_marginTop="76dp"
-        android:onClick="onClick"
+        android:layout_marginTop="96dp"
         android:background="@mipmap/ic_launcher_search_btn_round"
+        android:onClick="onClick"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
 
@@ -55,6 +56,7 @@
         android:layout_marginBottom="8dp"
         android:text="POWERD BY"
         android:textStyle="bold"
+
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="@+id/search_button"
         app:layout_constraintStart_toStartOf="@+id/search_button" />
@@ -63,13 +65,13 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="112dp"
         android:text="BOOKMINE®"
         android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="@+id/textView2" />
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/search_button" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -154,12 +156,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
 
-        android:layout_width="match_parent"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="5dp"
+        android:layout_width="350dp"
         android:layout_height="70dp"
 
         app:layout_constraintEnd_toEndOf="@+id/search_field"
+        app:layout_constraintStart_toStartOf="@+id/search_field"
         app:layout_constraintTop_toBottomOf="@+id/search_field" />
 
 
