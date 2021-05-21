@@ -25,7 +25,9 @@ public class MainActivity2 extends AppCompatActivity {
     String searchContent,Filterbartext;
     private RecyclerView mResultList;
     private DatabaseReference mUserDatabase;
-    public static final String EXTRA_TEXT2 = "Extra.search.for.third.page";
+    public static final String EXTRA_TEXT1 = "Extra.search.for.third.page.title";
+    public static final String EXTRA_TEXT2 = "Extra.search.for.third.page.author";
+    public static final String EXTRA_TEXT3 = "Extra.search.for.third.page.category";
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,6 @@ public class MainActivity2 extends AppCompatActivity {
         Intent intent = getIntent();
         searchContent = intent.getStringExtra(MainActivity.EXTRA_NAME);
         Filterbartext = intent.getStringExtra(MainActivity.EXTRA_NAME_F);
-        Toast.makeText(MainActivity2.this,"You Searching For : " + searchContent +"+" + Filterbartext,Toast.LENGTH_SHORT).show();
         //Code of recyclerview
         mUserDatabase = FirebaseDatabase.getInstance().getReference("Books");
 
@@ -51,9 +52,15 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void firebaseUserSearch(String s,String y) {
 
-        //Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_LONG).show();
-
-        Query firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s); //.orderByChild("genre_and_votes").startAt(y).endAt(y)
+        Query firebaseSearchQueary;
+        if(y.equals("All"))
+        {
+            firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s);
+        }
+        else
+            {
+                    firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s); //.orderByChild("genre_and_votes").startAt(y).endAt(y)
+            }
 
         FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder>(
                 Book1.class,
@@ -65,14 +72,14 @@ public class MainActivity2 extends AppCompatActivity {
             protected void populateViewHolder(MainActivity2.UsersViewHolder usersViewHolder, Book1 book1, int i) {
                 usersViewHolder.setDetails(getApplicationContext(),book1.getTitle(),book1.getAuthor(),book1.getGenre_and_votes(),book1.getNumber_of_pages(),book1.getCover_link());
 
-//                usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//
-//                        //next page all book info
-//
-//                    }
-//                });
+                usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        openActivity3(v,book1.getTitle(),book1.getAuthor(),book1.getGenre_and_votes());
+
+                    }
+                });
             }
         };
         mResultList.setAdapter(firebaseRecyclerAdapter);
@@ -106,11 +113,13 @@ public class MainActivity2 extends AppCompatActivity {
 
 
 
-    public void openActivity3(View view)
+    public void openActivity3(View view,String title,String author,String category)
     {
-        Toast.makeText(MainActivity2.this,"Opening Third Page...",Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity2.this,"Opening "+title,Toast.LENGTH_SHORT).show();
         Intent intent1 = new Intent(this, BOOKMINE3.class);
-        intent1.putExtra(EXTRA_TEXT2,searchContent);
+        intent1.putExtra(EXTRA_TEXT1,title);
+        intent1.putExtra(EXTRA_TEXT2,author);
+        intent1.putExtra(EXTRA_TEXT3,category);
         startActivity(intent1);
     }
 

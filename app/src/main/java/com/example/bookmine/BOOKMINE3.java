@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class BOOKMINE3 extends AppCompatActivity {
     TextView secondPageSearchContent3;
-    String searchContent2;
+    String title,author,category;
     public static final String EXTRA_TEXT_LAST = "com.example.bookmine.extra.last";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,10 +18,12 @@ public class BOOKMINE3 extends AppCompatActivity {
 
         //My code
 
-        secondPageSearchContent3 = findViewById(R.id.searchText2);
+
         Intent intent1 = getIntent();
-        searchContent2 = intent1.getStringExtra(MainActivity2.EXTRA_TEXT2);
-        secondPageSearchContent3.setText("You Searching For Page3 : "+searchContent2);
+        title = intent1.getStringExtra(MainActivity2.EXTRA_TEXT1);
+        author = intent1.getStringExtra(MainActivity2.EXTRA_TEXT2);
+        category = intent1.getStringExtra(MainActivity2.EXTRA_TEXT3);
+
     }
 
 }

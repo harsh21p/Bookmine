@@ -159,7 +159,8 @@
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="@+id/search_field"
         app:layout_constraintTop_toBottomOf="@+id/search_field"
-        app:startIconDrawable="@drawable/ic_baseline_filter_alt_24">
+        app:startIconDrawable="@drawable/ic_baseline_filter_alt_24"
+        >
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/autoComplete"
