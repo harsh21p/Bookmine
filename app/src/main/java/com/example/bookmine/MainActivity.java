@@ -30,12 +30,12 @@
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
      public static final String EXTRA_NAME_F = "com.example.bookmine.extra.filtrbartext";
      private SearchView mSearchField;
-     RecyclerView mResultList;
-     DatabaseReference mUserDatabase;
-     TextInputLayout mFilterBar;
-     AutoCompleteTextView mFilterBarO2;
-     ArrayList<String> mFilterBarList;
-     ArrayAdapter<String> mFilterListArryAdap;
+     private RecyclerView mResultList;
+     private DatabaseReference mUserDatabase;
+     private TextInputLayout mFilterBar;
+     private AutoCompleteTextView mFilterBarO2;
+     private ArrayList<String> mFilterBarList;
+     private ArrayAdapter<String> mFilterListArryAdap;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,9 +44,10 @@
         mFilterBar=findViewById(R.id.textInputLayout);
         mFilterBarO2=findViewById(R.id.autoComplete);
         mFilterBarList=new ArrayList<>();
-        mFilterBarList.add("Author Name 1");
-         mFilterBarList.add("Author Name 2");
-         mFilterBarList.add("Author Name 3");
+        mFilterBarList.add("Category 1");
+         mFilterBarList.add("Category 2");
+         mFilterBarList.add("Category 3");
+         mFilterBarList.add("History");
         //add catageris
 
         mFilterListArryAdap=new ArrayAdapter<>(getApplicationContext(),R.layout.filterbar,mFilterBarList);
@@ -63,7 +64,6 @@
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
         search();
-
 
     }
 
