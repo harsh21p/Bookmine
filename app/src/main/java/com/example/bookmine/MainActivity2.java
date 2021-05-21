@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class MainActivity2 extends AppCompatActivity {
     TextView secondPageSearchContent;
-    String searchContent;
+    String searchContent,Filterbartext;
     public static final String EXTRA_TEXT2 = "Extra.search.for.third.page";
     @SuppressLint("SetTextI18n")
     @Override
@@ -24,8 +24,8 @@ public class MainActivity2 extends AppCompatActivity {
         secondPageSearchContent =findViewById(R.id.searchText);
         Intent intent = getIntent();
         searchContent = intent.getStringExtra(MainActivity.EXTRA_NAME);
-        secondPageSearchContent.setText( "You Searching For : " + searchContent);
-
+        Filterbartext = intent.getStringExtra(MainActivity.EXTRA_NAME_F);
+        Toast.makeText(MainActivity2.this,"You Searching For : " + searchContent +"+" + Filterbartext,Toast.LENGTH_SHORT).show();
     }
     public void openActivity3(View view)
     {

@@ -3,6 +3,8 @@
  import android.content.Intent;
  import android.os.Bundle;
  import android.view.View;
+ import android.widget.ArrayAdapter;
+ import android.widget.AutoCompleteTextView;
  import android.widget.EditText;
  import android.widget.ImageButton;
  import android.widget.SearchView;
@@ -15,25 +17,42 @@
  import androidx.recyclerview.widget.RecyclerView;
 
  import com.firebase.ui.database.FirebaseRecyclerAdapter;
+ import com.google.android.material.textfield.TextInputLayout;
  import com.google.firebase.database.DatabaseReference;
  import com.google.firebase.database.FirebaseDatabase;
  import com.google.firebase.database.Query;
 
+ import java.util.ArrayList;
  import java.util.Objects;
 
  public class MainActivity extends AppCompatActivity {
 
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
+     public static final String EXTRA_NAME_F = "com.example.bookmine.extra.filtrbartext";
      private SearchView mSearchField;
      RecyclerView mResultList;
      DatabaseReference mUserDatabase;
-     EditText mFilterBar;
+     TextInputLayout mFilterBar;
+     AutoCompleteTextView mFilterBarO2;
+     ArrayList<String> mFilterBarList;
+     ArrayAdapter<String> mFilterListArryAdap;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        mFilterBar=findViewById(R.id.editTextTextPersonName2);
+        mFilterBar=findViewById(R.id.textInputLayout);
+        mFilterBarO2=findViewById(R.id.autoComplete);
+        mFilterBarList=new ArrayList<>();
+        mFilterBarList.add("Author Name 1");
+         mFilterBarList.add("Author Name 2");
+         mFilterBarList.add("Author Name 3");
+        //add catageris
+
+        mFilterListArryAdap=new ArrayAdapter<>(getApplicationContext(),R.layout.filterbar,mFilterBarList);
+        mFilterBarO2.setAdapter(mFilterListArryAdap);
+        mFilterBarO2.setThreshold(1);
+
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference("Books");
 
@@ -81,11 +100,11 @@ void search(){
              @Override
              protected void populateViewHolder(UsersViewHolder usersViewHolder, Books books, int i) {
                  usersViewHolder.setDetails(books.getAuthor());
+
                  usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
-                         mSearchField.setQuery(books.getAuthor(),false);
-
+                         mSearchField.setQuery(books.getAuthor(),true);
                      }
                  });
              }
@@ -108,13 +127,14 @@ void search(){
     }
 
      public void onClick(View view)
-     {
-
+     { String Filterbartext = mFilterBar.getEditText().getText().toString().trim();
         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity2.class);
         mSearchField= findViewById(R.id.search_field);
         String searchContent = mSearchField.getQuery().toString();
         intent.putExtra(EXTRA_NAME,searchContent);
+         intent.putExtra(EXTRA_NAME_F,Filterbartext);
+
         startActivity(intent);
 
      }

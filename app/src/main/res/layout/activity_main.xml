@@ -6,48 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <ImageButton
         android:id="@+id/search_button"
         android:layout_width="63dp"
         android:layout_height="63dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="64dp"
         android:background="@mipmap/ic_launcher_search_btn_round"
         android:onClick="onClick"
         android:text="Search"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
     <SearchView
         android:id="@+id/search_field"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/search_layout"
         android:iconifiedByDefault="false"
         android:queryHint=" Author's Name"
-        android:background="@drawable/search_layout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
     </SearchView>
-
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:background="@drawable/search_layout"
-        android:ems="10"
-        android:hint=" Filterbar"
-        android:inputType="textPersonName"
-        android:padding="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_field" />
 
     <TextView
         android:id="@+id/textView2"
@@ -65,19 +51,19 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
+        android:layout_marginBottom="36dp"
         android:text="BOOKMINE®"
         android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/search_button" />
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="@+id/textView2" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="196dp"
         android:layout_height="117dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -162,6 +148,31 @@
         app:layout_constraintEnd_toEndOf="@+id/search_field"
         app:layout_constraintStart_toStartOf="@+id/search_field"
         app:layout_constraintTop_toBottomOf="@+id/search_field" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="350dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="@+id/search_field"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="@+id/search_field"
+        app:layout_constraintTop_toBottomOf="@+id/search_field"
+        app:startIconDrawable="@drawable/ic_baseline_filter_alt_24">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/autoComplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_layout"
+            android:textSize="15dp"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
