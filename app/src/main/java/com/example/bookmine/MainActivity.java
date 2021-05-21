@@ -380,13 +380,33 @@ void search(){
     mSearchField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
-            firebaseUserSearch(query);
+            String[] words = query.toString().split(" ");
+            StringBuilder sb = new StringBuilder();
+            if (words[0].length() > 0) {
+                sb.append(Character.toUpperCase(words[0].charAt(0)) + words[0].subSequence(1, words[0].length()).toString().toLowerCase());
+                for (int i = 1; i < words.length; i++) {
+                    sb.append(" ");
+                    sb.append(Character.toUpperCase(words[i].charAt(0)) + words[i].subSequence(1, words[i].length()).toString().toLowerCase());
+                }
+            }
+            String titleCaseValue1 = sb.toString();
+            firebaseUserSearch(titleCaseValue1);
             return false;
         }
 
         @Override
         public boolean onQueryTextChange(String newText) {
-            firebaseUserSearch(newText);
+            String[] words = newText.toString().split(" ");
+            StringBuilder sb = new StringBuilder();
+            if (words[0].length() > 0) {
+                sb.append(Character.toUpperCase(words[0].charAt(0)) + words[0].subSequence(1, words[0].length()).toString().toLowerCase());
+                for (int i = 1; i < words.length; i++) {
+                    sb.append(" ");
+                    sb.append(Character.toUpperCase(words[i].charAt(0)) + words[i].subSequence(1, words[i].length()).toString().toLowerCase());
+                }
+            }
+            String titleCaseValue = sb.toString();
+            firebaseUserSearch(titleCaseValue);
 
             return false;
         }
