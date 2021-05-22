@@ -83,27 +83,17 @@ public class MainActivity2 extends AppCompatActivity {
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
         //call
-        firebaseUserSearch(searchContent);
+        firebaseUserSearch(searchContent,Filterbartext);
 
     }
 
-    private void firebaseUserSearch(String s1) {
+    private void firebaseUserSearch(String s,String y) {
 
-        String[] words = s1.toString().split(" ");
-        StringBuilder sb = new StringBuilder();
-        if (words[0].length() > 0) {
-            sb.append(Character.toUpperCase(words[0].charAt(0)) + words[0].subSequence(1, words[0].length()).toString().toLowerCase());
-            for (int i = 1; i < words.length; i++) {
-                sb.append(" ");
-                sb.append(Character.toUpperCase(words[i].charAt(0)) + words[i].subSequence(1, words[i].length()).toString().toLowerCase());
-            }
-        }
-        String s = sb.toString();
         Query firebaseSearchQueary;
         if(s.equals("All")){
-         firebaseSearchQueary = mUserDatabase;
-        }else {
             firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s);
+        }else {
+            firebaseSearchQueary = mUserDatabase.orderByChild("authorcat").startAt(s+y).endAt(s);
         }
 
         FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder>(
@@ -114,9 +104,6 @@ public class MainActivity2 extends AppCompatActivity {
         ) {
             @Override
             protected void populateViewHolder(MainActivity2.UsersViewHolder usersViewHolder, Book1 book1, int i) {
-                  // imptext=book1.getGenre_and_votes();
-
-                if(imptext.equals(Filterbartext)) {
 
                     usersViewHolder.setDetails(imptext,Filterbartext, getApplicationContext(), book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getLink(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
 
@@ -129,9 +116,6 @@ public class MainActivity2 extends AppCompatActivity {
 
                         }
                     });
-                }else {
-                    if(Filterbartext.equals("All"))
-                    {
                         usersViewHolder.setDetails(imptext,Filterbartext, getApplicationContext(), book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getLink(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
 
 
@@ -144,23 +128,9 @@ public class MainActivity2 extends AppCompatActivity {
                             }
                         });
                     }
-                }
-            }
-        };
-//issue of imptext not set as category
-        if(imptext.equals(Filterbartext))
-        {
-            mResultList.setAdapter(firebaseRecyclerAdapter);
-            Toast.makeText(MainActivity2.this,imptext,Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            if(Filterbartext.equals("All"))
-            {
-                mResultList.setAdapter(firebaseRecyclerAdapter);
-                Toast.makeText(MainActivity2.this,imptext,Toast.LENGTH_SHORT).show();
-            }
-        }
+                 };
+
+        mResultList.setAdapter(firebaseRecyclerAdapter);
     }
 
     public static class UsersViewHolder extends RecyclerView.ViewHolder{
@@ -172,7 +142,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         public void setDetails(String imptext,String Filterbartext,Context ctx,String bookname,String coverlink,String authorname, String category, String noofpages,String year,String amazon_redirect_url,String author_link,String five_star_rating,String four_star_rating,String link,String onr_star_rating,String rating_count,String review_count,String worldcat_redirect_link)
         {
-            if(imptext.equals(Filterbartext)) {
+
             TextView book_name = mView.findViewById(R.id.booknametext);
             TextView author_name = mView.findViewById(R.id.authornametext);
             TextView Category_name = mView.findViewById(R.id.categorytext);
@@ -185,22 +155,6 @@ public class MainActivity2 extends AppCompatActivity {
             page_no.setText(noofpages);
             Glide.with(ctx).load(coverlink).into(image);
 
-            }
-            else {
-                if (Filterbartext.equals("All")) {
-                    TextView book_name = mView.findViewById(R.id.booknametext);
-                    TextView author_name = mView.findViewById(R.id.authornametext);
-                    TextView Category_name = mView.findViewById(R.id.categorytext);
-                    TextView page_no = mView.findViewById(R.id.noofpagestext);
-                    ImageView image = mView.findViewById(R.id.bookcoverimg);
-
-                    book_name.setText(bookname);
-                    author_name.setText(authorname);
-                    Category_name.setText(category);
-                    page_no.setText(noofpages);
-                    Glide.with(ctx).load(coverlink).into(image);
-                }
-            }
         }
     }
 

@@ -371,6 +371,7 @@
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
+
         search();
 
     }
