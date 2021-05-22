@@ -85,7 +85,7 @@ public class MainActivity2 extends AppCompatActivity {
         mResultList.setLayoutManager(new LinearLayoutManager(this));
         //call
         if(searchContent.contains(".")) {
-            firebaseUserSearch(searchContent1, Filterbartext1);
+            firebaseUserSearch(searchContent1, Filterbartext);
         }else {
 
             firebaseUserSearch(searchContent, Filterbartext);

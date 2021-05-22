@@ -392,8 +392,8 @@ void search(){
                 }
             }
             String titleCaseValue1 = sb.toString();
-            Toast.makeText(MainActivity.this,query,Toast.LENGTH_SHORT).show();
-            if(query.contains("\\.")){
+
+            if(query.contains(".")){
             firebaseUserSearch(query);
             }else {
                 firebaseUserSearch(titleCaseValue1);
