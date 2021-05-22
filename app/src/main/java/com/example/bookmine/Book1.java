@@ -1,27 +1,18 @@
 package com.example.bookmine;
 
 public class Book1 {
-    String title,cover_link,author,genre_and_votes,number_of_pages,year_published,amazon_redirect_link,author_link,five_star_ratings,four_star_ratings,link,one_star_ratings,rating_count,review_count,three_star_ratings,two_star_ratings,worldcat_redirect_link;
-
-    public Book1(String title, String cover_link, String author, String genre_and_votes, String number_of_pages, String year_published, String amazon_redirect_link, String author_link, String five_star_ratings, String four_star_ratings, String link, String one_star_ratings, String rating_count, String review_count, String three_star_ratings, String two_star_ratings, String worldcat_redirect_link) {
-        this.title = title;
-        this.cover_link = cover_link;
-        this.author = author;
-        this.genre_and_votes = genre_and_votes;
-        this.number_of_pages = number_of_pages;
-        this.year_published = year_published;
-        this.amazon_redirect_link = amazon_redirect_link;
-        this.author_link = author_link;
-        this.five_star_ratings = five_star_ratings;
-        this.four_star_ratings = four_star_ratings;
-        this.link = link;
-        this.one_star_ratings = one_star_ratings;
-        this.rating_count = rating_count;
-        this.review_count = review_count;
-        this.three_star_ratings = three_star_ratings;
-        this.two_star_ratings = two_star_ratings;
-        this.worldcat_redirect_link = worldcat_redirect_link;
+    String booklinks,title,cover_link,author,genre_and_votes,number_of_pages,year_published,amazon_redirect_link,author_link,five_star_ratings,four_star_ratings,one_star_ratings,rating_count,review_count,three_star_ratings,two_star_ratings,worldcat_redirect_link;
+    public Book1() {
     }
+
+    public String getBooklinks() {
+        return booklinks;
+    }
+
+    public void setBooklinks(String booklinks) {
+        this.booklinks = booklinks;
+    }
+
 
     public String getTitle() {
         return title;
@@ -103,14 +94,6 @@ public class Book1 {
         this.four_star_ratings = four_star_ratings;
     }
 
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
     public String getOne_star_ratings() {
         return one_star_ratings;
     }
@@ -159,7 +142,25 @@ public class Book1 {
         this.worldcat_redirect_link = worldcat_redirect_link;
     }
 
-    public Book1() {
+    public Book1(String booklinks, String title, String cover_link, String author, String genre_and_votes, String number_of_pages, String year_published, String amazon_redirect_link, String author_link, String five_star_ratings, String four_star_ratings, String one_star_ratings, String rating_count, String review_count, String three_star_ratings, String two_star_ratings, String worldcat_redirect_link) {
+        this.booklinks = booklinks;
+        this.title = title;
+        this.cover_link = cover_link;
+        this.author = author;
+        this.genre_and_votes = genre_and_votes;
+        this.number_of_pages = number_of_pages;
+        this.year_published = year_published;
+        this.amazon_redirect_link = amazon_redirect_link;
+        this.author_link = author_link;
+        this.five_star_ratings = five_star_ratings;
+        this.four_star_ratings = four_star_ratings;
+        this.one_star_ratings = one_star_ratings;
+        this.rating_count = rating_count;
+        this.review_count = review_count;
+        this.three_star_ratings = three_star_ratings;
+        this.two_star_ratings = two_star_ratings;
+        this.worldcat_redirect_link = worldcat_redirect_link;
     }
+
 
 }

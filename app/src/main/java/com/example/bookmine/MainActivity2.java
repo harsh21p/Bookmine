@@ -40,7 +40,8 @@ public class MainActivity2 extends AppCompatActivity {
     public static final String EXTRA_TEXT13= "Extra.search.for.third.page.category10";
     public static final String EXTRA_TEXT14= "Extra.search.for.third.page.category11";
     public static final String EXTRA_TEXT15= "Extra.search.for.third.page.category12";
-    String imptext;
+
+
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -76,7 +77,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
         Filterbartext = sb.toString();
-        imptext=Filterbartext;
+
         mUserDatabase = FirebaseDatabase.getInstance().getReference("Books");
 
         mResultList=findViewById(R.id.recycler_view_secondpage);
@@ -93,7 +94,7 @@ public class MainActivity2 extends AppCompatActivity {
         if(s.equals("All")){
             firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s);
         }else {
-            firebaseSearchQueary = mUserDatabase.orderByChild("authorcat").startAt(s+y).endAt(s);
+            firebaseSearchQueary = mUserDatabase.orderByChild("authcat").startAt(s+y).endAt(s);
         }
 
         FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder>(
@@ -105,25 +106,25 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             protected void populateViewHolder(MainActivity2.UsersViewHolder usersViewHolder, Book1 book1, int i) {
 
-                    usersViewHolder.setDetails(imptext,Filterbartext, getApplicationContext(), book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getLink(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
+                    usersViewHolder.setDetails(getApplicationContext(), book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getBooklinks(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
 
 
                     usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            openActivity3(v, book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getLink(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
+                            openActivity3(v, book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getBooklinks(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
 
                         }
                     });
-                        usersViewHolder.setDetails(imptext,Filterbartext, getApplicationContext(), book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getLink(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
+                        usersViewHolder.setDetails(getApplicationContext(), book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getBooklinks(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
 
 
                         usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
 
-                                openActivity3(v, book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getLink(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
+                                openActivity3(v, book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getBooklinks(), book1.getOne_star_ratings(), book1.getRating_count(), book1.getReview_count(), book1.getWorldcat_redirect_link());
 
                             }
                         });
@@ -140,7 +141,7 @@ public class MainActivity2 extends AppCompatActivity {
             mView = itemView;
         }
 
-        public void setDetails(String imptext,String Filterbartext,Context ctx,String bookname,String coverlink,String authorname, String category, String noofpages,String year,String amazon_redirect_url,String author_link,String five_star_rating,String four_star_rating,String link,String onr_star_rating,String rating_count,String review_count,String worldcat_redirect_link)
+        public void setDetails(Context ctx,String bookname,String coverlink,String authorname, String category, String noofpages,String year,String amazon_redirect_url,String author_link,String five_star_rating,String four_star_rating,String booklinks,String onr_star_rating,String rating_count,String review_count,String worldcat_redirect_link)
         {
 
             TextView book_name = mView.findViewById(R.id.booknametext);
@@ -158,7 +159,7 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    public void openActivity3(View view,String bookname,String coverlink,String authorname, String category, String noofpages,String year,String amazon_redirect_url,String author_link,String five_star_rating,String four_star_rating,String link,String onr_star_rating,String rating_count,String review_count,String worldcat_redirect_link)
+    public void openActivity3(View view,String bookname,String coverlink,String authorname, String category, String noofpages,String year,String amazon_redirect_url,String author_link,String five_star_rating,String four_star_rating,String booklinks,String onr_star_rating,String rating_count,String review_count,String worldcat_redirect_link)
     {
         Toast.makeText(MainActivity2.this,"Opening "+bookname,Toast.LENGTH_SHORT).show();
         Intent intent1 = new Intent(this, BOOKMINE3.class);
@@ -172,7 +173,7 @@ public class MainActivity2 extends AppCompatActivity {
         intent1.putExtra(EXTRA_TEXT8,author_link);
         intent1.putExtra(EXTRA_TEXT9,five_star_rating);
         intent1.putExtra(EXTRA_TEXT10,four_star_rating);
-        intent1.putExtra(EXTRA_TEXT11,link);
+        intent1.putExtra(EXTRA_TEXT11,booklinks);
         intent1.putExtra(EXTRA_TEXT12,onr_star_rating);
         intent1.putExtra(EXTRA_TEXT13,rating_count);
         intent1.putExtra(EXTRA_TEXT14,review_count);

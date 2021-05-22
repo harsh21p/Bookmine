@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class BOOKMINE3 extends AppCompatActivity {
     TextView secondPageSearchContent3;
-    String title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,link,onestarrating,ratingcount,reviewrating,worldcatredirectlink;
+    String title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,booklinks,onestarrating,ratingcount,reviewrating,worldcatredirectlink;
     public static final String EXTRA_TEXT_LAST = "com.example.bookmine.extra.last";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class BOOKMINE3 extends AppCompatActivity {
         authorlink= intent1.getStringExtra(MainActivity2.EXTRA_TEXT8);
         fivestarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT9);
         fourstarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT10);
-        link = intent1.getStringExtra(MainActivity2.EXTRA_TEXT11);
+        booklinks = intent1.getStringExtra(MainActivity2.EXTRA_TEXT11);
         onestarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT12);
         ratingcount = intent1.getStringExtra(MainActivity2.EXTRA_TEXT13);
         reviewrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT14);
