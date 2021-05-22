@@ -78,23 +78,40 @@ public class MainActivity2 extends AppCompatActivity {
         }
         Filterbartext = sb.toString();
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference("Books");
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
 
         mResultList=findViewById(R.id.recycler_view_secondpage);
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
         //call
-        firebaseUserSearch(searchContent,Filterbartext);
+        if(searchContent.contains(".")) {
+            firebaseUserSearch(searchContent1, Filterbartext1);
+        }else {
+
+            firebaseUserSearch(searchContent, Filterbartext);
+        }
 
     }
 
     private void firebaseUserSearch(String s,String y) {
 
         Query firebaseSearchQueary;
-        if(s.equals("All")){
-            firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s);
+        if(y.equals("All")){
+            if(s.equals("All"))
+            {
+                firebaseSearchQueary = mUserDatabase;
+            }else {
+                firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s);
+            }
+
         }else {
-            firebaseSearchQueary = mUserDatabase.orderByChild("authcat").startAt(s+y).endAt(s);
+            if(s.equals("All"))
+            {
+                firebaseSearchQueary = mUserDatabase.orderByChild("genre_and_votes").startAt(y).endAt(y);;
+            }else
+                {
+                firebaseSearchQueary = mUserDatabase.orderByChild("authcat").startAt(s+y).endAt(s+y);
+            }
         }
 
         FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder>(

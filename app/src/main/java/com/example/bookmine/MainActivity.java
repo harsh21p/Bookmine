@@ -363,7 +363,7 @@
         mFilterBarO2.setThreshold(1);
 
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference("Books");
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
 
         mSearchField=findViewById(R.id.search_field);
 
@@ -381,6 +381,7 @@ void search(){
     mSearchField.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
+
             String[] words = query.toString().split(" ");
             StringBuilder sb = new StringBuilder();
             if (words[0].length() > 0) {
@@ -391,7 +392,12 @@ void search(){
                 }
             }
             String titleCaseValue1 = sb.toString();
-            firebaseUserSearch(titleCaseValue1);
+            Toast.makeText(MainActivity.this,query,Toast.LENGTH_SHORT).show();
+            if(query.contains("\\.")){
+            firebaseUserSearch(query);
+            }else {
+                firebaseUserSearch(titleCaseValue1);
+            }
             return false;
         }
 
@@ -407,7 +413,13 @@ void search(){
                 }
             }
             String titleCaseValue = sb.toString();
-            firebaseUserSearch(titleCaseValue);
+
+            if(newText.contains(".")){
+                Toast.makeText(MainActivity.this,newText,Toast.LENGTH_SHORT).show();
+                firebaseUserSearch(newText);
+            }else {
+                firebaseUserSearch(titleCaseValue);
+            }
 
             return false;
         }
