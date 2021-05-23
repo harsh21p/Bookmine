@@ -24,7 +24,6 @@
                 android:id="@+id/toolbar2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
@@ -51,46 +50,55 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="9dp"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="207dp"
-            android:layout_marginHorizontal="95dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="3000dp"
-            android:src="@drawable/cover"
-            app:srcCompat="@drawable/cover" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/booknametext1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginBottom="1dp"
-            android:padding="5dp"
-            android:text="TextView"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="207dp"
+                android:layout_marginHorizontal="95dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/cover"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/cover" />
+
+            <TextView
+                android:id="@+id/booknametext1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:padding="5dp"
+                android:text="TextView"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_margin="9dp"
         android:elevation="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
 
         <TextView
             android:id="@+id/textView6"
@@ -100,6 +108,7 @@
             android:padding="5dp"
             android:text="Information"
             android:textStyle="bold" />
+
 
         <TextView
             android:id="@+id/textView7"
