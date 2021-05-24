@@ -12,9 +12,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class BOOKMINE3 extends AppCompatActivity {
     TextView secondPageSearchContent3;
-    String twostarrating,threestarrating,title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,booklinks,onestarrating,ratingcount,reviewrating,worldcatredirectlink;
+    String twostarrating,threestarrating,title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,booklinks,onestarrating,ratingcount;
     public static final String EXTRA_TEXT_LAST = "com.example.bookmine.extra.last";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +43,17 @@ public class BOOKMINE3 extends AppCompatActivity {
         booklinks = intent1.getStringExtra(MainActivity2.EXTRA_TEXT11);
         onestarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT12);
         ratingcount = intent1.getStringExtra(MainActivity2.EXTRA_TEXT13);
-        reviewrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT14);
-        worldcatredirectlink = intent1.getStringExtra(MainActivity2.EXTRA_TEXT15);
+       // reviewrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT14);
+       // worldcatredirectlink = intent1.getStringExtra(MainActivity2.EXTRA_TEXT15);
         twostarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT17);
         threestarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT16);
 
-        setDetailspage3(title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,booklinks,onestarrating,ratingcount,reviewrating,worldcatredirectlink,twostarrating,threestarrating);
+        setDetailspage3(title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,booklinks,onestarrating,ratingcount,twostarrating,threestarrating);
 
 
     }
 
-    public void setDetailspage3( String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String review_count, String worldcat_redirect_link,String twostarrating,String threestarrating)
+    public void setDetailspage3( String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count,String twostarrating,String threestarrating)
     {
 
         TextView book_name = findViewById(R.id.booknametext1);
@@ -60,7 +64,7 @@ public class BOOKMINE3 extends AppCompatActivity {
         ImageView amazon = findViewById(R.id.amazonlink);
         ImageView goodread =findViewById(R.id.goodreadlink);
         ImageView authorlink =findViewById(R.id.authorlink);
-        //TextView noofpages1 = findViewById(R.id.noofpagestext1);
+        TextView noofpages1 = findViewById(R.id.noofpagestext1);
         TextView ratingones1 = findViewById(R.id.rating1);
         TextView ratingones2 = findViewById(R.id.rating2);
         TextView ratingones3 = findViewById(R.id.rating3);
@@ -68,16 +72,29 @@ public class BOOKMINE3 extends AppCompatActivity {
         TextView ratingones5 = findViewById(R.id.rating5);
         TextView overallrating = findViewById(R.id.overallrating);
 
-        String overall="4.7";//perfom operation
+        double n5=5*Integer.parseInt(five_star_rating);
+        double n4=4*Integer.parseInt(four_star_rating);
+        double n3=3*Integer.parseInt(threestarrating);
+        double n2=2*Integer.parseInt(twostarrating);
+        double n1= Integer.parseInt(onr_star_rating);
+        double add=n1+n2+n3+n4+n5;
+        double nooftimesrated=Integer.parseInt(rating_count);
+        double rate=add/nooftimesrated;
+        DecimalFormat df2=new DecimalFormat();
+        df2.setMinimumFractionDigits(1);
+        df2.setMaximumFractionDigits(1);
+
+
+        String ratingover=String.valueOf(df2.format(rate));
         book_name.setText(bookname);
         author_name.setText(authorname);
         Category_name.setText(category);
         year_published.setText(year);
-        //noofpages1.setText(noofpages);
+        noofpages1.setText(noofpages);
         ratingones1.setText(onr_star_rating);
         ratingones2.setText(twostarrating);
         ratingones3.setText(threestarrating);
-        overallrating.setText(overall);
+        overallrating.setText(ratingover);
         ratingones4.setText(four_star_rating);
         ratingones5.setText(five_star_rating);
 
@@ -109,7 +126,7 @@ public class BOOKMINE3 extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse(booklinks));
+                intent.setData(Uri.parse(author_link));
                 startActivity(intent);
             }
         });

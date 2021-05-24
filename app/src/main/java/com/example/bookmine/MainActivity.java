@@ -415,7 +415,6 @@ void search(){
             String titleCaseValue = sb.toString();
 
             if(newText.contains(".")){
-                Toast.makeText(MainActivity.this,newText,Toast.LENGTH_SHORT).show();
                 firebaseUserSearch(newText);
             }else {
                 firebaseUserSearch(titleCaseValue);

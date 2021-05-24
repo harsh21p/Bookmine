@@ -156,6 +156,28 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
                     <TextView
+                        android:id="@+id/textVie90"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="36dp"
+                        android:padding="5dp"
+                        android:text="Pages :"
+                        app:layout_constraintBottom_toBottomOf="@+id/yeartext1"
+                        app:layout_constraintStart_toEndOf="@+id/yeartext1"
+                        app:layout_constraintTop_toTopOf="@+id/yeartext1" />
+
+                    <TextView
+                        android:id="@+id/noofpagestext1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="Pages"
+                        app:layout_constraintBottom_toBottomOf="@+id/textVie90"
+                        app:layout_constraintStart_toEndOf="@+id/textVie90"
+                        app:layout_constraintTop_toTopOf="@+id/textVie90"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -377,7 +399,8 @@
                         android:textSize="11dp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView11"
                         app:layout_constraintStart_toEndOf="@+id/imageView11"
-                        app:layout_constraintTop_toTopOf="@+id/imageView11" />
+                        app:layout_constraintTop_toTopOf="@+id/imageView11"
+                        app:layout_constraintVertical_bias="0.44" />
 
                     <ImageView
 
@@ -420,7 +443,7 @@
                         android:text="3000000"
                         android:textSize="11dp"
                         app:layout_constraintEnd_toEndOf="@+id/rating1"
-                        tools:layout_editor_absoluteY="61dp" />
+                        app:layout_constraintTop_toBottomOf="@+id/rating1" />
 
                     <TextView
                         android:id="@+id/rating3"
@@ -429,7 +452,7 @@
                         android:text="3000"
                         android:textSize="11dp"
                         app:layout_constraintEnd_toEndOf="@+id/rating2"
-                        tools:layout_editor_absoluteY="76dp" />
+                        app:layout_constraintTop_toBottomOf="@+id/rating2" />
 
                     <TextView
                         android:id="@+id/rating4"
@@ -438,7 +461,7 @@
                         android:text="3000000"
                         android:textSize="11dp"
                         app:layout_constraintEnd_toEndOf="@+id/rating3"
-                        tools:layout_editor_absoluteY="90dp" />
+                        app:layout_constraintTop_toBottomOf="@+id/rating3" />
 
                     <TextView
                         android:id="@+id/rating5"
@@ -447,7 +470,7 @@
                         android:text="3000"
                         android:textSize="11dp"
                         app:layout_constraintEnd_toEndOf="@+id/rating4"
-                        tools:layout_editor_absoluteY="106dp" />
+                        app:layout_constraintTop_toBottomOf="@+id/rating4" />
 
                     <TextView
                         android:id="@+id/textView10"
@@ -464,12 +487,13 @@
                         android:id="@+id/overallrating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_marginStart="56dp"
                         android:padding="5dp"
                         android:text="Rating"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView13"
-                        app:layout_constraintStart_toEndOf="@+id/imageView13"
-                        app:layout_constraintTop_toTopOf="@+id/imageView13" />
+                        app:layout_constraintStart_toStartOf="@+id/imageView13"
+                        app:layout_constraintTop_toTopOf="@+id/imageView13"
+                        app:layout_constraintVertical_bias="0.521" />
 
                     <ImageView
                         android:id="@+id/imageView13"
@@ -525,7 +549,7 @@
                 android:layout_marginStart="64dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:srcCompat="@drawable/amazon" />
 
             <ImageView
@@ -536,7 +560,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/authorlink"
                 app:layout_constraintStart_toEndOf="@+id/amazonlink"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:srcCompat="@drawable/goodreads" />
 
             <ImageView
@@ -547,7 +571,7 @@
                 android:layout_marginEnd="64dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12"
                 app:srcCompat="@drawable/author_round" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
