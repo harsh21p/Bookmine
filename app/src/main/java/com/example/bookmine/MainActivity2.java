@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -23,7 +24,7 @@ import com.google.firebase.database.Query;
 public class MainActivity2 extends AppCompatActivity {
     TextView secondPageSearchContent;
     String searchContent,Filterbartext1,Filterbartext,searchContent1;
-    private RecyclerView mResultList;
+    private RecyclerView mResultList1;
     private DatabaseReference mUserDatabase;
     public static final String EXTRA_TEXT1 = "Extra.search.for.third.page.title";
     public static final String EXTRA_TEXT2 = "Extra.search.for.third.page.author";
@@ -42,6 +43,8 @@ public class MainActivity2 extends AppCompatActivity {
     //public static final String EXTRA_TEXT15= "Extra.search.for.third.page.category12";
     public static final String EXTRA_TEXT16= "Extra.search.for.third.page.category13";
     public static final String EXTRA_TEXT17= "Extra.search.for.third.page.category14";
+
+    myadapter1 adapter1;
 
 
 
@@ -82,9 +85,9 @@ public class MainActivity2 extends AppCompatActivity {
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
 
-        mResultList=findViewById(R.id.recycler_view_secondpage);
-        mResultList.setHasFixedSize(true);
-        mResultList.setLayoutManager(new LinearLayoutManager(this));
+        mResultList1=findViewById(R.id.recycler_view_secondpage);
+        mResultList1.setHasFixedSize(true);
+        mResultList1.setLayoutManager(new LinearLayoutManager(this));
         //call
         if(searchContent.contains(".")) {
             firebaseUserSearch(searchContent1, Filterbartext);
@@ -98,79 +101,40 @@ public class MainActivity2 extends AppCompatActivity {
     private void firebaseUserSearch(String s,String y) {
 
         Query firebaseSearchQueary;
-        if(y.equals("All")){
-            if(s.equals("All"))
-            {
+        if (y.equals("All")) {
+            if (s.equals("All")) {
                 firebaseSearchQueary = mUserDatabase;
-            }else {
+            } else {
                 firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s);
             }
 
-        }else {
-            if(s.equals("All"))
-            {
-                firebaseSearchQueary = mUserDatabase.orderByChild("genre_and_votes").startAt(y).endAt(y);;
-            }else
-                {
-                firebaseSearchQueary = mUserDatabase.orderByChild("authcat").startAt(s+y).endAt(s+y);
+        } else {
+            if (s.equals("All")) {
+                firebaseSearchQueary = mUserDatabase.orderByChild("genre_and_votes").startAt(y).endAt(y);
+                ;
+            } else {
+                firebaseSearchQueary = mUserDatabase.orderByChild("authcat").startAt(s + y).endAt(s + y);
             }
         }
 
-        FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Book1, MainActivity2.UsersViewHolder>(
-                Book1.class,
-                R.layout.second_screen_cardview,
-                MainActivity2.UsersViewHolder.class,
-                firebaseSearchQueary
-        ) {
-            @Override
-            protected void populateViewHolder(MainActivity2.UsersViewHolder usersViewHolder, Book1 book1, int i) {
 
-                    usersViewHolder.setDetails(getApplicationContext(), book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages());
+        //code here
 
 
-                    usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+        FirebaseRecyclerOptions<Book1> options1 =new FirebaseRecyclerOptions.Builder<Book1>()
+                .setQuery(firebaseSearchQueary,Book1.class)
+                .build();
+        adapter1=new myadapter1(options1);
+        adapter1.startListening();
+        mResultList1.setAdapter(adapter1);
 
-                            openActivity3(v, book1.getTitle(), book1.getCover_link(), book1.getAuthor(), book1.getGenre_and_votes(), book1.getNumber_of_pages(), book1.getYear_published(), book1.getAmazon_redirect_link(), book1.getAuthor_link(), book1.getFive_star_ratings(), book1.getFour_star_ratings(), book1.getBooklinks(), book1.getOne_star_ratings(), book1.getRating_count(),book1.getThree_star_ratings(),book1.getTwo_star_ratings());
-
-                        }
-                    });
-                    }
-                 };
-
-        mResultList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class UsersViewHolder extends RecyclerView.ViewHolder{
-        View mView;
-        public UsersViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
 
-        public void setDetails(Context ctx,String bookname,String coverlink,String authorname, String category, String noofpages)
-        {
-
-            TextView book_name = mView.findViewById(R.id.booknametext);
-            TextView author_name = mView.findViewById(R.id.authornametext);
-            TextView Category_name = mView.findViewById(R.id.categorytext);
-            TextView page_no = mView.findViewById(R.id.noofpagestext);
-            ImageView image = mView.findViewById(R.id.bookcoverimg);
-
-            book_name.setText(bookname);
-            author_name.setText(authorname);
-            Category_name.setText(category);
-            page_no.setText(noofpages);
-            Glide.with(ctx).load(coverlink).into(image);
-
-        }
-    }
-
-    public void openActivity3(View view,String bookname,String coverlink,String authorname, String category, String noofpages,String year,String amazon_redirect_url,String author_link,String five_star_rating,String four_star_rating,String booklinks,String onr_star_rating,String rating_count,String three_star_rating,String toe_star_rating)
+    public static void openActivity3(View view, Context con, String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String three_star_rating, String toe_star_rating)
     {
-        Toast.makeText(MainActivity2.this,"Opening "+bookname,Toast.LENGTH_SHORT).show();
-        Intent intent1 = new Intent(this, BOOKMINE3.class);
+        Toast.makeText(con,"Opening "+bookname,Toast.LENGTH_SHORT).show();
+        Intent intent1 = new Intent(con, BOOKMINE3.class);
         intent1.putExtra(EXTRA_TEXT1,bookname);
         intent1.putExtra(EXTRA_TEXT2,coverlink);
         intent1.putExtra(EXTRA_TEXT3,authorname);
@@ -184,12 +148,12 @@ public class MainActivity2 extends AppCompatActivity {
         intent1.putExtra(EXTRA_TEXT11,booklinks);
         intent1.putExtra(EXTRA_TEXT12,onr_star_rating);
         intent1.putExtra(EXTRA_TEXT13,rating_count);
-       // intent1.putExtra(EXTRA_TEXT14,review_count);
-       // intent1.putExtra(EXTRA_TEXT15,worldcat_redirect_link);
+        // intent1.putExtra(EXTRA_TEXT14,review_count);
+        // intent1.putExtra(EXTRA_TEXT15,worldcat_redirect_link);
         intent1.putExtra(EXTRA_TEXT16,three_star_rating);
         intent1.putExtra(EXTRA_TEXT17,toe_star_rating);
-        startActivity(intent1);
+        con.startActivity(intent1);
     }
 
-
 }
+

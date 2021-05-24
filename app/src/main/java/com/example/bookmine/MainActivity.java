@@ -17,6 +17,7 @@
  import androidx.recyclerview.widget.RecyclerView;
 
  import com.firebase.ui.database.FirebaseRecyclerAdapter;
+ import com.firebase.ui.database.FirebaseRecyclerOptions;
  import com.google.android.material.textfield.TextInputLayout;
  import com.google.firebase.database.DatabaseReference;
  import com.google.firebase.database.FirebaseDatabase;
@@ -36,6 +37,7 @@
      private AutoCompleteTextView mFilterBarO2;
      private ArrayList<String> mFilterBarList;
      private ArrayAdapter<String> mFilterListArryAdap;
+     myadapter adapter;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -371,8 +373,9 @@
         mResultList.setHasFixedSize(true);
         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
-
         search();
+
+
 
     }
 
@@ -427,44 +430,17 @@ void search(){
 }
      private void firebaseUserSearch(String searchText) {
 
-         //Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_LONG).show();
+         FirebaseRecyclerOptions<Books> options =new FirebaseRecyclerOptions.Builder<Books>()
+             .setQuery(FirebaseDatabase.getInstance().getReference().getRoot().orderByChild("author").startAt(searchText).endAt(searchText+"\uf8ff"),Books.class)
+                 .build();
+         adapter=new myadapter(options);
+         adapter.startListening();
+         mResultList.setAdapter(adapter);
 
-         Query firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(searchText).endAt(searchText+"\uf8ff");
-
-         FirebaseRecyclerAdapter<Books,UsersViewHolder>firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Books, UsersViewHolder>(
-                 Books.class,
-                 R.layout.singlerow,
-                 UsersViewHolder.class,
-                 firebaseSearchQueary
-         ) {
-             @Override
-             protected void populateViewHolder(UsersViewHolder usersViewHolder, Books books, int i) {
-                 usersViewHolder.setDetails(books.getAuthor());
-
-                 usersViewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                     @Override
-                     public void onClick(View v) {
-                         mSearchField.setQuery(books.getAuthor(),true);
-                     }
-                 });
-             }
-         };
-         mResultList.setAdapter(firebaseRecyclerAdapter);
      }
 
-     public static class UsersViewHolder extends RecyclerView.ViewHolder{
-        View mView;
-        public UsersViewHolder(@NonNull View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
 
-        public void setDetails(String author)
-        {
-            TextView user_name = mView.findViewById(R.id.nametext);
-            user_name.setText(author);
-        }
-    }
+
      public void onClick(View view){
          String searchContent1 = mSearchField.getQuery().toString();
          String Filterbartext1 = mFilterBar.getEditText().getText().toString().trim();
@@ -487,6 +463,8 @@ void search(){
          }
 
      }
+
+
      public void onClick1(View view)
      { String Filterbartext = mFilterBar.getEditText().getText().toString().trim();
         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
