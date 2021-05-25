@@ -1,5 +1,6 @@
  package com.example.bookmine;
 
+ import android.content.Context;
  import android.content.Intent;
  import android.os.Bundle;
  import android.view.View;
@@ -30,7 +31,7 @@
 
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
      public static final String EXTRA_NAME_F = "com.example.bookmine.extra.filtrbartext";
-     private SearchView mSearchField;
+     public static SearchView mSearchField;
      private RecyclerView mResultList;
      private DatabaseReference mUserDatabase;
      private TextInputLayout mFilterBar;
@@ -436,6 +437,12 @@ void search(){
          adapter=new myadapter(options);
          adapter.startListening();
          mResultList.setAdapter(adapter);
+
+     }
+
+     public static void onclicksewtquery(View v, Context con1, String author,SearchView m){
+
+         m.setQuery(author,false);
 
      }
 

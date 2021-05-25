@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,14 @@ public class myadapter extends FirebaseRecyclerAdapter<Books,myadapter.myviewhol
     @Override
     protected void onBindViewHolder(@NonNull myviewholder holder, int position, @NonNull Books model) {
         holder.name.setText(model.getAuthor());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity m=new MainActivity();
+                MainActivity.onclicksewtquery(v,holder.itemView.getContext(),model.getAuthor(),MainActivity.mSearchField);
+            }
+        });
 
     }
 
