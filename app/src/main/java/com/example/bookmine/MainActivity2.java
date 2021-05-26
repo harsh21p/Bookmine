@@ -110,17 +110,17 @@ public class MainActivity2 extends AppCompatActivity {
         Query firebaseSearchQueary;
         if (y.equals("All")) {
             if (s.equals("All")) {
-                firebaseSearchQueary = mUserDatabase.collection("applications");
+                firebaseSearchQueary = mUserDatabase.collection("Books");
             } else {
-                firebaseSearchQueary = mUserDatabase.collection("applications").orderBy("author").startAt(s).endAt(s);
+                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("author").startAt(s).endAt(s);
             }
 
         } else {
             if (s.equals("All")) {
-                firebaseSearchQueary = mUserDatabase.collection("applications").orderBy("genre_and_votes").startAt(y).endAt(y);
+                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("genre_and_votes").startAt(y).endAt(y);
                 ;
             } else {
-                firebaseSearchQueary = mUserDatabase.collection("applications").orderBy("genre_and_votes").startAt(y).endAt(y).orderBy("author").startAt(s).endAt(s);
+                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("authcat").startAt(s + y).endAt(s + y);
             }
         }
 
@@ -128,8 +128,8 @@ public class MainActivity2 extends AppCompatActivity {
 
 
             PagedList.Config config = new PagedList.Config.Builder()
-                .setPrefetchDistance(5)
-                .setPageSize(3)
+                .setPrefetchDistance(3)
+                .setPageSize(2)
                     .build();
         FirestorePagingOptions<Book1> options =new FirestorePagingOptions.Builder<Book1>()
                 .setLifecycleOwner(this)
@@ -156,7 +156,7 @@ public class MainActivity2 extends AppCompatActivity {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            holder.openActivity3(v, model.getTitle(), model.getCover_link(), model.getAuthor(), model.getGenre_and_votes(), model.getNumber_of_pages(), model.getYear_published(), model.getAmazon_redirect_link(), model.getAuthor_link(), model.getFive_star_ratings(), model.getFour_star_ratings(), model.getBooklinks(), model.getOne_star_ratings(), model.getRating_count(),model.getThree_star_ratings(),model.getTwo_star_ratings());
+                            openActivity3(v, model.getTitle(), model.getCover_link(), model.getAuthor(), model.getGenre_and_votes(), model.getNumber_of_pages(), model.getYear_published(), model.getAmazon_redirect_link(), model.getAuthor_link(), model.getFive_star_ratings(), model.getFour_star_ratings(), model.getBooklinks(), model.getOne_star_ratings(), model.getRating_count(),model.getThree_star_ratings(),model.getTwo_star_ratings());
                         }
                     });
 
@@ -205,7 +205,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 
             }
-
+    }
 
             public void openActivity3(View view, String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String three_star_rating, String toe_star_rating) {
                 Toast.makeText(MainActivity2.this, "Opening " + bookname, Toast.LENGTH_SHORT).show();
@@ -229,7 +229,7 @@ public class MainActivity2 extends AppCompatActivity {
                 intent1.putExtra(EXTRA_TEXT17, toe_star_rating);
                 startActivity(intent1);
             }
-        }
+
 
 
 }

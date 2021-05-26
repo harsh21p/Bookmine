@@ -445,7 +445,7 @@ void search(){
                  .setPageSize(3)
                  .build();
 
-         Query q = FirebaseFirestore.getInstance().collection("applications").orderBy("author").startAt(searchText).endAt(searchText+"\uf8ff");
+         Query q = FirebaseFirestore.getInstance().collection("Books").orderBy("author").startAt(searchText).endAt(searchText+"\uf8ff");
          FirestorePagingOptions<Books> options = new FirestorePagingOptions.Builder<Books>()
                  .setLifecycleOwner(this)
                  .setQuery(q,config,Books.class)
