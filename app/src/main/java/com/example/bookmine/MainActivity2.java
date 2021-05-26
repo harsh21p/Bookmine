@@ -110,17 +110,17 @@ public class MainActivity2 extends AppCompatActivity {
         Query firebaseSearchQueary;
         if (y.equals("All")) {
             if (s.equals("All")) {
-                firebaseSearchQueary = mUserDatabase.collection("Books");
+                firebaseSearchQueary = mUserDatabase.collection("applications");
             } else {
-                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("author").startAt(s).endAt(s);
+                firebaseSearchQueary = mUserDatabase.collection("applications").orderBy("author").startAt(s).endAt(s);
             }
 
         } else {
             if (s.equals("All")) {
-                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("genre_and_votes").startAt(y).endAt(y);
+                firebaseSearchQueary = mUserDatabase.collection("applications").orderBy("genre_and_votes").startAt(y).endAt(y);
                 ;
             } else {
-                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("genre_and_votes").startAt(y).endAt(y).orderBy("author").startAt(s).endAt(s);
+                firebaseSearchQueary = mUserDatabase.collection("applications").orderBy("genre_and_votes").startAt(y).endAt(y).orderBy("author").startAt(s).endAt(s);
             }
         }
 
