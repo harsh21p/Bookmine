@@ -536,6 +536,13 @@ void search(){
      }
 
 
+     public void onClickabouus(View view)
+     {
+
+         Intent intent = new Intent(this, aboutus.class);
+         startActivity(intent);
+     }
+
      public void onClick1(View view)
      { String Filterbartext = mFilterBar.getEditText().getText().toString().trim();
         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
