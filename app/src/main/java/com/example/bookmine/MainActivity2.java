@@ -120,7 +120,7 @@ public class MainActivity2 extends AppCompatActivity {
                 firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("genre_and_votes").startAt(y).endAt(y);
                 ;
             } else {
-                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("authcat").startAt(s + y).endAt(s + y);
+                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("genre_and_votes").startAt(y).endAt(y).orderBy("author").startAt(s).endAt(s);
             }
         }
 
