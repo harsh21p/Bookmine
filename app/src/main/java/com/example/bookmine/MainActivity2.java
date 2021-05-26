@@ -2,6 +2,7 @@ package com.example.bookmine;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -9,23 +10,29 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+import com.firebase.ui.firestore.paging.LoadingState;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
 
 public class MainActivity2 extends AppCompatActivity {
     TextView secondPageSearchContent;
     String searchContent,Filterbartext1,Filterbartext,searchContent1;
     private RecyclerView mResultList1;
-    private DatabaseReference mUserDatabase;
+    private FirebaseFirestore mUserDatabase;
     public static final String EXTRA_TEXT1 = "Extra.search.for.third.page.title";
     public static final String EXTRA_TEXT2 = "Extra.search.for.third.page.author";
     public static final String EXTRA_TEXT3 = "Extra.search.for.third.page.category";
@@ -44,7 +51,8 @@ public class MainActivity2 extends AppCompatActivity {
     public static final String EXTRA_TEXT16= "Extra.search.for.third.page.category13";
     public static final String EXTRA_TEXT17= "Extra.search.for.third.page.category14";
 
-    myadapter1 adapter1;
+    private FirestorePagingAdapter adapter;
+    private RecyclerView mResultList;
 
 
 
@@ -83,11 +91,10 @@ public class MainActivity2 extends AppCompatActivity {
         }
         Filterbartext = sb.toString();
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
+        mUserDatabase = FirebaseFirestore.getInstance();
 
-        mResultList1=findViewById(R.id.recycler_view_secondpage);
-        mResultList1.setHasFixedSize(true);
-        mResultList1.setLayoutManager(new LinearLayoutManager(this));
+        mResultList=findViewById(R.id.recycler_view_secondpage);
+
         //call
         if(searchContent.contains(".")) {
             firebaseUserSearch(searchContent1, Filterbartext);
@@ -103,57 +110,127 @@ public class MainActivity2 extends AppCompatActivity {
         Query firebaseSearchQueary;
         if (y.equals("All")) {
             if (s.equals("All")) {
-                firebaseSearchQueary = mUserDatabase;
+                firebaseSearchQueary = mUserDatabase.collection("Books");
             } else {
-                firebaseSearchQueary = mUserDatabase.orderByChild("author").startAt(s).endAt(s);
+                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("author").startAt(s).endAt(s);
             }
 
         } else {
             if (s.equals("All")) {
-                firebaseSearchQueary = mUserDatabase.orderByChild("genre_and_votes").startAt(y).endAt(y);
+                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("genre_and_votes").startAt(y).endAt(y);
                 ;
             } else {
-                firebaseSearchQueary = mUserDatabase.orderByChild("authcat").startAt(s + y).endAt(s + y);
+                firebaseSearchQueary = mUserDatabase.collection("Books").orderBy("authcat").startAt(s + y).endAt(s + y);
             }
         }
 
 
-        //code here
 
 
-        FirebaseRecyclerOptions<Book1> options1 =new FirebaseRecyclerOptions.Builder<Book1>()
-                .setQuery(firebaseSearchQueary,Book1.class)
-                .build();
-        adapter1=new myadapter1(options1);
-        adapter1.startListening();
-        mResultList1.setAdapter(adapter1);
+            PagedList.Config config = new PagedList.Config.Builder()
+                .setPrefetchDistance(5)
+                .setPageSize(3)
+                    .build();
+        FirestorePagingOptions<Book1> options =new FirestorePagingOptions.Builder<Book1>()
+                .setLifecycleOwner(this)
+                    .setQuery(firebaseSearchQueary,config,Book1.class)
+                    .build();
+
+
+            adapter= new FirestorePagingAdapter<Book1, MainActivity2.viewholder>(options) {
+                @NonNull
+                @Override
+                public MainActivity2.viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                    View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.second_screen_cardview,parent,false);
+                    return new MainActivity2.viewholder(view);
+                }
+
+                @Override
+                protected void onBindViewHolder(@NonNull MainActivity2.viewholder holder, int position, @NonNull Book1 model) {
+                    holder.book_name.setText(model.getTitle());
+                    holder.author_name.setText(model.getAuthor());
+                    holder.Category_name.setText(model.getGenre_and_votes());
+                    holder.page_no.setText(model.getNumber_of_pages());
+                    Glide.with(holder.image.getContext()).load(model.getCover_link()).into(holder.image);
+
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            holder.openActivity3(v, model.getTitle(), model.getCover_link(), model.getAuthor(), model.getGenre_and_votes(), model.getNumber_of_pages(), model.getYear_published(), model.getAmazon_redirect_link(), model.getAuthor_link(), model.getFive_star_ratings(), model.getFour_star_ratings(), model.getBooklinks(), model.getOne_star_ratings(), model.getRating_count(),model.getThree_star_ratings(),model.getTwo_star_ratings());
+                        }
+                    });
+
+                }
+
+                @Override
+                protected void onLoadingStateChanged(@NonNull LoadingState state) {
+                    super.onLoadingStateChanged(state);
+                    switch (state){
+                        case LOADED:
+                            break;
+                        case ERROR:
+                            break;
+                        case FINISHED:
+                            break;
+                        case LOADING_MORE:
+                            break;
+                        case LOADING_INITIAL:
+                            break;
+                    }
+                }
+            };
+
+        mResultList.setHasFixedSize(true);
+        mResultList.setLayoutManager(new LinearLayoutManager(this));
+        mResultList.setAdapter(adapter);
+
 
     }
+        private class viewholder extends RecyclerView.ViewHolder {
+
+            TextView book_name;
+            TextView author_name;
+            TextView Category_name;
+            TextView page_no;
+            ImageView image;
+
+            public viewholder(@NonNull View itemView) {
+
+                super(itemView);
+                book_name = itemView.findViewById(R.id.booknametext);
+                author_name = itemView.findViewById(R.id.authornametext);
+                Category_name = itemView.findViewById(R.id.categorytext);
+                page_no = itemView.findViewById(R.id.noofpagestext);
+                image = itemView.findViewById(R.id.bookcoverimg);
 
 
-    public static void openActivity3(View view, Context con, String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String three_star_rating, String toe_star_rating)
-    {
-        Toast.makeText(con,"Opening "+bookname,Toast.LENGTH_SHORT).show();
-        Intent intent1 = new Intent(con, BOOKMINE3.class);
-        intent1.putExtra(EXTRA_TEXT1,bookname);
-        intent1.putExtra(EXTRA_TEXT2,coverlink);
-        intent1.putExtra(EXTRA_TEXT3,authorname);
-        intent1.putExtra(EXTRA_TEXT4,category);
-        intent1.putExtra(EXTRA_TEXT5,noofpages);
-        intent1.putExtra(EXTRA_TEXT6,year);
-        intent1.putExtra(EXTRA_TEXT7,amazon_redirect_url);
-        intent1.putExtra(EXTRA_TEXT8,author_link);
-        intent1.putExtra(EXTRA_TEXT9,five_star_rating);
-        intent1.putExtra(EXTRA_TEXT10,four_star_rating);
-        intent1.putExtra(EXTRA_TEXT11,booklinks);
-        intent1.putExtra(EXTRA_TEXT12,onr_star_rating);
-        intent1.putExtra(EXTRA_TEXT13,rating_count);
-        // intent1.putExtra(EXTRA_TEXT14,review_count);
-        // intent1.putExtra(EXTRA_TEXT15,worldcat_redirect_link);
-        intent1.putExtra(EXTRA_TEXT16,three_star_rating);
-        intent1.putExtra(EXTRA_TEXT17,toe_star_rating);
-        con.startActivity(intent1);
-    }
+            }
+
+
+            public void openActivity3(View view, String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String three_star_rating, String toe_star_rating) {
+                Toast.makeText(MainActivity2.this, "Opening " + bookname, Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(MainActivity2.this, BOOKMINE3.class);
+                intent1.putExtra(EXTRA_TEXT1, bookname);
+                intent1.putExtra(EXTRA_TEXT2, coverlink);
+                intent1.putExtra(EXTRA_TEXT3, authorname);
+                intent1.putExtra(EXTRA_TEXT4, category);
+                intent1.putExtra(EXTRA_TEXT5, noofpages);
+                intent1.putExtra(EXTRA_TEXT6, year);
+                intent1.putExtra(EXTRA_TEXT7, amazon_redirect_url);
+                intent1.putExtra(EXTRA_TEXT8, author_link);
+                intent1.putExtra(EXTRA_TEXT9, five_star_rating);
+                intent1.putExtra(EXTRA_TEXT10, four_star_rating);
+                intent1.putExtra(EXTRA_TEXT11, booklinks);
+                intent1.putExtra(EXTRA_TEXT12, onr_star_rating);
+                intent1.putExtra(EXTRA_TEXT13, rating_count);
+                // intent1.putExtra(EXTRA_TEXT14,review_count);
+                // intent1.putExtra(EXTRA_TEXT15,worldcat_redirect_link);
+                intent1.putExtra(EXTRA_TEXT16, three_star_rating);
+                intent1.putExtra(EXTRA_TEXT17, toe_star_rating);
+                startActivity(intent1);
+            }
+        }
+
 
 }
 

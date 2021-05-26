@@ -1,31 +1,37 @@
  package com.example.bookmine;
 
- import android.content.Context;
  import android.content.Intent;
  import android.os.Bundle;
+ import android.util.Log;
+ import android.view.LayoutInflater;
  import android.view.View;
+ import android.view.ViewGroup;
  import android.widget.ArrayAdapter;
  import android.widget.AutoCompleteTextView;
- import android.widget.EditText;
- import android.widget.ImageButton;
  import android.widget.SearchView;
  import android.widget.TextView;
  import android.widget.Toast;
 
  import androidx.annotation.NonNull;
  import androidx.appcompat.app.AppCompatActivity;
+ import androidx.paging.PagedList;
  import androidx.recyclerview.widget.LinearLayoutManager;
  import androidx.recyclerview.widget.RecyclerView;
 
- import com.firebase.ui.database.FirebaseRecyclerAdapter;
- import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+ import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
+ import com.firebase.ui.firestore.paging.FirestorePagingOptions;
+ import com.firebase.ui.firestore.paging.LoadingState;
  import com.google.android.material.textfield.TextInputLayout;
- import com.google.firebase.database.DatabaseReference;
- import com.google.firebase.database.FirebaseDatabase;
- import com.google.firebase.database.Query;
+ import com.google.firebase.firestore.FirebaseFirestore;
+ import com.google.firebase.firestore.Query;
 
  import java.util.ArrayList;
  import java.util.Objects;
+
+ import static androidx.paging.PagedList.Config;
 
  public class MainActivity extends AppCompatActivity {
 
@@ -33,12 +39,13 @@
      public static final String EXTRA_NAME_F = "com.example.bookmine.extra.filtrbartext";
      public static SearchView mSearchField;
      private RecyclerView mResultList;
-     private DatabaseReference mUserDatabase;
+     private FirebaseFirestore mUserDatabase;
      private TextInputLayout mFilterBar;
      private AutoCompleteTextView mFilterBarO2;
      private ArrayList<String> mFilterBarList;
      private ArrayAdapter<String> mFilterListArryAdap;
-     myadapter adapter;
+     private FirestorePagingAdapter adapter;
+
      @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -366,13 +373,15 @@
         mFilterBarO2.setThreshold(1);
 
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().getRoot();
+        mUserDatabase = FirebaseFirestore.getInstance();
 
         mSearchField=findViewById(R.id.search_field);
 
         mResultList=findViewById(R.id.recycler_view);
-        mResultList.setHasFixedSize(true);
-        mResultList.setLayoutManager(new LinearLayoutManager(this));
+         mResultList.setHasFixedSize(true);
+         mResultList.setLayoutManager(new LinearLayoutManager(this));
+
+         //firebaseUserSearch("J");
 
         search();
 
@@ -431,18 +440,73 @@ void search(){
 }
      private void firebaseUserSearch(String searchText) {
 
-         FirebaseRecyclerOptions<Books> options =new FirebaseRecyclerOptions.Builder<Books>()
-             .setQuery(FirebaseDatabase.getInstance().getReference().getRoot().orderByChild("author").startAt(searchText).endAt(searchText+"\uf8ff"),Books.class)
+         PagedList.Config config = new PagedList.Config.Builder()
+                 .setPrefetchDistance(5)
+                 .setPageSize(3)
                  .build();
-         adapter=new myadapter(options);
-         adapter.startListening();
-         mResultList.setAdapter(adapter);
 
+         Query q = FirebaseFirestore.getInstance().collection("Books").orderBy("author").startAt(searchText).endAt(searchText+"\uf8ff");
+         FirestorePagingOptions<Books> options = new FirestorePagingOptions.Builder<Books>()
+                 .setLifecycleOwner(this)
+                 .setQuery(q,config,Books.class)
+                 .build();
+
+          adapter = new FirestorePagingAdapter<Books, viewHolder>(options) {
+              @NonNull
+              @Override
+              public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                  View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.singlerow,parent,false);
+
+                  return new viewHolder(view);
+              }
+
+              @Override
+              protected void onBindViewHolder(@NonNull viewHolder holder, int position, @NonNull Books model) {
+                  holder.authorname.setText(model.getAuthor());
+                  holder.itemView.setOnClickListener(new View.OnClickListener() {
+                      @Override
+                      public void onClick(View v) {
+
+                          onclicksewtquery(v,model.getAuthor());
+                      }
+                  });
+              }
+
+              @Override
+              protected void onLoadingStateChanged(@NonNull LoadingState state) {
+                  super.onLoadingStateChanged(state);
+                  switch (state){
+                      case LOADED:
+                          break;
+                      case ERROR:
+                          break;
+                      case FINISHED:
+                          break;
+                      case LOADING_MORE:
+                          break;
+                      case LOADING_INITIAL:
+                          break;
+                  }
+              }
+          };
+          mResultList.setHasFixedSize(true);
+          mResultList.setLayoutManager(new LinearLayoutManager(this));
+          mResultList.setAdapter(adapter);
      }
 
-     public static void onclicksewtquery(View v, Context con1, String author,SearchView m){
+     private class viewHolder extends RecyclerView.ViewHolder {
+         private TextView authorname;
+         public viewHolder(@NonNull View itemView) {
+             super(itemView);
+             authorname=itemView.findViewById(R.id.nametext);
+         }
+     }
 
-         m.setQuery(author,false);
+     //recycler adapter end
+
+     public  void onclicksewtquery(View v, String author){
+
+         mSearchField.setQuery(author,false);
 
      }
 
@@ -485,4 +549,6 @@ void search(){
 
      }
 
-}
+
+
+ }
