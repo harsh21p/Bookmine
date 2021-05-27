@@ -128,8 +128,8 @@ public class MainActivity2 extends AppCompatActivity {
 
 
             PagedList.Config config = new PagedList.Config.Builder()
-                .setPrefetchDistance(3)
-                .setPageSize(2)
+                .setPrefetchDistance(15)
+                .setPageSize(3)
                     .build();
         FirestorePagingOptions<Book1> options =new FirestorePagingOptions.Builder<Book1>()
                 .setLifecycleOwner(this)

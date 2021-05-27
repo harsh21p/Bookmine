@@ -441,8 +441,8 @@ void search(){
      private void firebaseUserSearch(String searchText) {
 
          PagedList.Config config = new PagedList.Config.Builder()
-                 .setPrefetchDistance(5)
-                 .setPageSize(3)
+                 .setPrefetchDistance(8)
+                 .setPageSize(1)
                  .build();
 
          Query q = FirebaseFirestore.getInstance().collection("Books").orderBy("author").startAt(searchText).endAt(searchText+"\uf8ff");
@@ -450,6 +450,7 @@ void search(){
                  .setLifecycleOwner(this)
                  .setQuery(q,config,Books.class)
                  .build();
+
 
           adapter = new FirestorePagingAdapter<Books, viewHolder>(options) {
               @NonNull
