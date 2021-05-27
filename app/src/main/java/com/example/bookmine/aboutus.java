@@ -21,7 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class aboutus extends AppCompatActivity {
-    String z,link,click;
+    private String z,link,click;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

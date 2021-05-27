@@ -101,7 +101,7 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/ic_baseline_notification_important_24"
+                android:background="@drawable/ic_baseline_notifications_24"
                 android:onClick="onClickabouus"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -184,6 +184,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text=""
+        android:textColor="#EE5656"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

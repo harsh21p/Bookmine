@@ -1,6 +1,7 @@
  package com.example.bookmine;
 
  import android.content.Intent;
+ import android.net.Uri;
  import android.os.Bundle;
  import android.util.Log;
  import android.view.LayoutInflater;
@@ -24,9 +25,13 @@
  import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
  import com.firebase.ui.firestore.paging.FirestorePagingOptions;
  import com.firebase.ui.firestore.paging.LoadingState;
+ import com.google.android.gms.tasks.OnCompleteListener;
+ import com.google.android.gms.tasks.Task;
  import com.google.android.material.textfield.TextInputLayout;
  import com.google.firebase.firestore.FirebaseFirestore;
  import com.google.firebase.firestore.Query;
+ import com.google.firebase.firestore.QueryDocumentSnapshot;
+ import com.google.firebase.firestore.QuerySnapshot;
 
  import java.util.ArrayList;
  import java.util.Objects;
@@ -45,6 +50,7 @@
      private ArrayList<String> mFilterBarList;
      private ArrayAdapter<String> mFilterListArryAdap;
      private FirestorePagingAdapter adapter;
+     private String z;
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -382,8 +388,36 @@
          mResultList.setLayoutManager(new LinearLayoutManager(this));
 
          //firebaseUserSearch("J");
+         //if else for swich
 
-        search();
+         TextView notification1 = findViewById(R.id.textView21);
+
+
+
+         FirebaseFirestore notification = FirebaseFirestore.getInstance();
+
+         notification.collection("notification").orderBy("new")
+                 .get()
+                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                     @Override
+                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                         if (task.isSuccessful()) {
+                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                 z =document.getData().get("note").toString();
+                                 notification1.setText(z);
+
+                             }
+                         } else {
+                             String z =" ";
+                             TextView notification = findViewById(R.id.textView21);
+                             notification.setText(z);
+
+                         }
+                     }
+                 });
+
+
+         search();
 
 
 
@@ -508,6 +542,7 @@ void search(){
      public  void onclicksewtquery(View v, String author){
 
          mSearchField.setQuery(author,false);
+         adapter.stopListening();
 
      }
 
