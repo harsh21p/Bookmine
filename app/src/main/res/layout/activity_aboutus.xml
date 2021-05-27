@@ -18,7 +18,7 @@
     <ImageView
         android:id="@+id/imageView19"
         android:layout_width="20dp"
-        android:layout_height="32dp"
+        android:layout_height="20dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView20"
         app:layout_constraintStart_toEndOf="@+id/imageView20"
@@ -28,8 +28,8 @@
 
     <ImageView
         android:id="@+id/imageView20"
-        android:layout_width="26dp"
-        android:layout_height="31dp"
+        android:layout_width="28dp"
+        android:layout_height="33dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView20"
         app:layout_constraintStart_toEndOf="@+id/textView20"
@@ -121,8 +121,8 @@
 
     <ImageView
         android:id="@+id/imageView14"
-        android:layout_width="26dp"
-        android:layout_height="31dp"
+        android:layout_width="28dp"
+        android:layout_height="33dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/textView18"
         app:layout_constraintStart_toEndOf="@+id/textView18"
@@ -132,12 +132,12 @@
     <ImageView
         android:id="@+id/imageView18"
         android:layout_width="20dp"
-        android:layout_height="32dp"
+        android:layout_height="20dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView14"
         app:layout_constraintStart_toEndOf="@+id/imageView14"
         app:layout_constraintTop_toTopOf="@+id/imageView14"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.454"
         app:srcCompat="@drawable/twitter" />
 
     <TextView
