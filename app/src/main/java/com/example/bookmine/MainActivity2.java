@@ -50,6 +50,7 @@ public class MainActivity2 extends AppCompatActivity {
     //public static final String EXTRA_TEXT15= "Extra.search.for.third.page.category12";
     public static final String EXTRA_TEXT16= "Extra.search.for.third.page.category13";
     public static final String EXTRA_TEXT17= "Extra.search.for.third.page.category14";
+    public static final String EXTRA_TEXT18= "Extra.search.for.third.page.category15";
 
     private FirestorePagingAdapter adapter;
     private RecyclerView mResultList;
@@ -105,7 +106,8 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
-    private void firebaseUserSearch(String s,String y) {
+    private void firebaseUserSearch(String s,String y)
+    {
 
         Query firebaseSearchQueary;
         if (y.equals("All")) {
@@ -156,7 +158,7 @@ public class MainActivity2 extends AppCompatActivity {
                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            openActivity3(v, model.getTitle(), model.getCover_link(), model.getAuthor(), model.getGenre_and_votes(), model.getNumber_of_pages(), model.getYear_published(), model.getAmazon_redirect_link(), model.getAuthor_link(), model.getFive_star_ratings(), model.getFour_star_ratings(), model.getBooklinks(), model.getOne_star_ratings(), model.getRating_count(),model.getThree_star_ratings(),model.getTwo_star_ratings());
+                            openActivity3(v,getApplicationContext(),model.getTitle(), model.getCover_link(), model.getAuthor(), model.getGenre_and_votes(), model.getNumber_of_pages(), model.getYear_published(), model.getAmazon_redirect_link(), model.getAuthor_link(), model.getFive_star_ratings(), model.getFour_star_ratings(), model.getBooklinks(), model.getOne_star_ratings(), model.getRating_count(),model.getThree_star_ratings(),model.getTwo_star_ratings());
                         }
                     });
 
@@ -207,7 +209,7 @@ public class MainActivity2 extends AppCompatActivity {
             }
     }
 
-            public void openActivity3(View view, String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String three_star_rating, String toe_star_rating) {
+            private void openActivity3(View view,Context con,String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String three_star_rating, String toe_star_rating) {
                 Toast.makeText(MainActivity2.this, "Opening " + bookname, Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(MainActivity2.this, BOOKMINE3.class);
                 intent1.putExtra(EXTRA_TEXT1, bookname);
@@ -227,6 +229,7 @@ public class MainActivity2 extends AppCompatActivity {
                 // intent1.putExtra(EXTRA_TEXT15,worldcat_redirect_link);
                 intent1.putExtra(EXTRA_TEXT16, three_star_rating);
                 intent1.putExtra(EXTRA_TEXT17, toe_star_rating);
+                intent1.putExtra(EXTRA_TEXT18,"MAIN2");
                 startActivity(intent1);
             }
 

@@ -17,6 +17,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class BOOKMINE3 extends AppCompatActivity {
+    String identifer;
     TextView secondPageSearchContent3;
     String twostarrating,threestarrating,title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,booklinks,onestarrating,ratingcount;
     public static final String EXTRA_TEXT_LAST = "com.example.bookmine.extra.last";
@@ -26,10 +27,13 @@ public class BOOKMINE3 extends AppCompatActivity {
         setContentView(R.layout.activity_b_o_o_k_m_i_n_e3);
         getSupportActionBar().hide();
 
+        identifer="No";
         //My code
-
-
         Intent intent1 = getIntent();
+         identifer = intent1.getStringExtra(MainActivity2.EXTRA_TEXT18);
+         identifer = intent1.getStringExtra(MainActivity.EXTRA_TEXT18);
+
+        if(identifer.equals("MAIN2")){
         title = intent1.getStringExtra(MainActivity2.EXTRA_TEXT1);
         coverlink = intent1.getStringExtra(MainActivity2.EXTRA_TEXT2);
         author = intent1.getStringExtra(MainActivity2.EXTRA_TEXT3);
@@ -47,6 +51,27 @@ public class BOOKMINE3 extends AppCompatActivity {
        // worldcatredirectlink = intent1.getStringExtra(MainActivity2.EXTRA_TEXT15);
         twostarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT17);
         threestarrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT16);
+        }else {
+            if(identifer.equals("MAIN1")){
+                title = intent1.getStringExtra(MainActivity.EXTRA_TEXT1);
+                coverlink = intent1.getStringExtra(MainActivity.EXTRA_TEXT2);
+                author = intent1.getStringExtra(MainActivity.EXTRA_TEXT3);
+                category = intent1.getStringExtra(MainActivity.EXTRA_TEXT4);
+                noofpages = intent1.getStringExtra(MainActivity.EXTRA_TEXT5);
+                year = intent1.getStringExtra(MainActivity.EXTRA_TEXT6);
+                amazonredirecturl = intent1.getStringExtra(MainActivity.EXTRA_TEXT7);
+                authorlink= intent1.getStringExtra(MainActivity.EXTRA_TEXT8);
+                fivestarrating = intent1.getStringExtra(MainActivity.EXTRA_TEXT9);
+                fourstarrating = intent1.getStringExtra(MainActivity.EXTRA_TEXT10);
+                booklinks = intent1.getStringExtra(MainActivity.EXTRA_TEXT11);
+                onestarrating = intent1.getStringExtra(MainActivity.EXTRA_TEXT12);
+                ratingcount = intent1.getStringExtra(MainActivity.EXTRA_TEXT13);
+                // reviewrating = intent1.getStringExtra(MainActivity2.EXTRA_TEXT14);
+                // worldcatredirectlink = intent1.getStringExtra(MainActivity2.EXTRA_TEXT15);
+                twostarrating = intent1.getStringExtra(MainActivity.EXTRA_TEXT17);
+                threestarrating = intent1.getStringExtra(MainActivity.EXTRA_TEXT16);
+            }
+        }
 
         setDetailspage3(title,coverlink,author,category,noofpages,year,amazonredirecturl,authorlink,fivestarrating,fourstarrating,booklinks,onestarrating,ratingcount,twostarrating,threestarrating);
 
@@ -130,7 +155,7 @@ public class BOOKMINE3 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        identifer="NO";
 
     }
 

@@ -1,5 +1,6 @@
  package com.example.bookmine;
 
+ import android.content.Context;
  import android.content.Intent;
  import android.net.Uri;
  import android.os.Bundle;
@@ -9,6 +10,7 @@
  import android.view.ViewGroup;
  import android.widget.ArrayAdapter;
  import android.widget.AutoCompleteTextView;
+ import android.widget.ImageView;
  import android.widget.SearchView;
  import android.widget.TextView;
  import android.widget.Toast;
@@ -20,6 +22,7 @@
  import androidx.recyclerview.widget.RecyclerView;
 
 
+ import com.bumptech.glide.Glide;
  import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
  import com.firebase.ui.firestore.FirestoreRecyclerOptions;
  import com.firebase.ui.firestore.paging.FirestorePagingAdapter;
@@ -42,15 +45,39 @@
 
      public static final String EXTRA_NAME = "com.example.bookmine.extra.searchContent";
      public static final String EXTRA_NAME_F = "com.example.bookmine.extra.filtrbartext";
+
+     public static final String EXTRA_TEXT1 = "Extra.search.for.third.page.title";
+     public static final String EXTRA_TEXT2 = "Extra.search.for.third.page.author";
+     public static final String EXTRA_TEXT3 = "Extra.search.for.third.page.category";
+     public static final String EXTRA_TEXT4 = "Extra.search.for.third.page.category1";
+     public static final String EXTRA_TEXT5 = "Extra.search.for.third.page.category2";
+     public static final String EXTRA_TEXT6 = "Extra.search.for.third.page.category3";
+     public static final String EXTRA_TEXT7 = "Extra.search.for.third.page.category4";
+     public static final String EXTRA_TEXT8 = "Extra.search.for.third.page.category5";
+     public static final String EXTRA_TEXT9 = "Extra.search.for.third.page.category6";
+     public static final String EXTRA_TEXT10 = "Extra.search.for.third.page.category7";
+     public static final String EXTRA_TEXT11= "Extra.search.for.third.page.category8";
+     public static final String EXTRA_TEXT12= "Extra.search.for.third.page.category9";
+     public static final String EXTRA_TEXT13= "Extra.search.for.third.page.category10";
+     //public static final String EXTRA_TEXT14= "Extra.search.for.third.page.category11";
+     //public static final String EXTRA_TEXT15= "Extra.search.for.third.page.category12";
+     public static final String EXTRA_TEXT16= "Extra.search.for.third.page.category13";
+     public static final String EXTRA_TEXT17= "Extra.search.for.third.page.category14";
+     public static final String EXTRA_TEXT18= "Extra.search.for.third.page.category15";
+
      public static SearchView mSearchField;
      private RecyclerView mResultList;
+     private RecyclerView mResultList1;
      private FirebaseFirestore mUserDatabase;
      private TextInputLayout mFilterBar;
      private AutoCompleteTextView mFilterBarO2;
      private ArrayList<String> mFilterBarList;
      private ArrayAdapter<String> mFilterListArryAdap;
      private FirestorePagingAdapter adapter;
+     private FirestorePagingAdapter adapter1;
      private String z;
+
+
 
      @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -377,15 +404,15 @@
         mFilterListArryAdap=new ArrayAdapter<>(getApplicationContext(),R.layout.filterbar,mFilterBarList);
         mFilterBarO2.setAdapter(mFilterListArryAdap);
         mFilterBarO2.setThreshold(1);
+         mSearchField=findViewById(R.id.search_field);
+         mUserDatabase = FirebaseFirestore.getInstance();
+         mResultList1=findViewById(R.id.recycler_view1);
 
 
-        mUserDatabase = FirebaseFirestore.getInstance();
+         mResultList=findViewById(R.id.recycler_view);
 
-        mSearchField=findViewById(R.id.search_field);
+         search();
 
-        mResultList=findViewById(R.id.recycler_view);
-         mResultList.setHasFixedSize(true);
-         mResultList.setLayoutManager(new LinearLayoutManager(this));
 
          //firebaseUserSearch("J");
          //if else for swich
@@ -417,9 +444,18 @@
                  });
 
 
-         search();
 
 
+    }
+
+    protected void onStart(){
+         super.onStart();
+        firebaseUserSearch1();
+
+    }
+    protected  void onStop(){
+         super.onStop();
+         adapter1.stopListening();
 
     }
 
@@ -580,7 +616,8 @@ void search(){
      }
 
      public void onClick1(View view)
-     { String Filterbartext = mFilterBar.getEditText().getText().toString().trim();
+     {
+         String Filterbartext = mFilterBar.getEditText().getText().toString().trim();
         Toast.makeText(MainActivity.this,"Searching...",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity2.class);
         mSearchField= findViewById(R.id.search_field);
@@ -590,6 +627,112 @@ void search(){
 
         startActivity(intent);
 
+     }
+
+     //firest page cardview of all books
+
+     private void firebaseUserSearch1() {
+
+                 set1(2);
+
+     }
+
+     private void set1(int i){
+
+         Query firebaseSearchQueary;
+
+         firebaseSearchQueary = mUserDatabase.collection("Books");
+
+         PagedList.Config config = new PagedList.Config.Builder()
+                 .setPrefetchDistance(15)
+                 .setPageSize(3)
+                 .build();
+         FirestorePagingOptions<Book1> options =new FirestorePagingOptions.Builder<Book1>()
+                 .setLifecycleOwner(this)
+                 .setQuery(firebaseSearchQueary,config,Book1.class)
+                 .build();
+
+
+         adapter1= new FirestorePagingAdapter<Book1, MainActivity.viewholder2>(options) {
+             @NonNull
+             @Override
+             public MainActivity.viewholder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                 View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.firstscreen,parent,false);
+                 return new MainActivity.viewholder2(view);
+             }
+
+
+             @Override
+             protected void onBindViewHolder(@NonNull viewholder2 holder, int position, @NonNull Book1 model) {
+
+                 holder.setDetailsfirstcard1(model.getTitle(),model.getCover_link());
+
+                 holder.itemView.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         openActivity3(v,getApplicationContext(),model.getTitle(), model.getCover_link(), model.getAuthor(), model.getGenre_and_votes(), model.getNumber_of_pages(), model.getYear_published(), model.getAmazon_redirect_link(), model.getAuthor_link(), model.getFive_star_ratings(), model.getFour_star_ratings(), model.getBooklinks(), model.getOne_star_ratings(), model.getRating_count(),model.getThree_star_ratings(),model.getTwo_star_ratings());
+                     }
+                 });
+             }
+
+         };
+         set();
+
+     }
+
+     private void set(){
+         mResultList1.setHasFixedSize(true);
+         mResultList1.setLayoutManager(new LinearLayoutManager(this));
+         mResultList1.setAdapter(adapter1);
+     }
+     private class viewholder2 extends RecyclerView.ViewHolder
+     {
+
+         TextView book_name;
+         TextView author_name;
+         TextView Category_name;
+         ImageView image;
+
+         public viewholder2(@NonNull View itemView) {
+
+             super(itemView);
+         }
+
+         private void setDetailsfirstcard1(String name,String getCover) {
+             book_name = itemView.findViewById(R.id.booknametext7);
+             image = itemView.findViewById(R.id.bookcoverimg7);
+
+            book_name.setText(name);
+            Glide.with(image.getContext()).load(getCover).into(image);
+
+         }
+
+     }
+
+
+     private void openActivity3(View view, Context con, String bookname, String coverlink, String authorname, String category, String noofpages, String year, String amazon_redirect_url, String author_link, String five_star_rating, String four_star_rating, String booklinks, String onr_star_rating, String rating_count, String three_star_rating, String toe_star_rating) {
+         Toast.makeText(MainActivity.this, "Opening " + bookname, Toast.LENGTH_SHORT).show();
+         adapter1.stopListening();
+         Intent intent1 = new Intent(MainActivity.this, BOOKMINE3.class);
+         intent1.putExtra(EXTRA_TEXT1, bookname);
+         intent1.putExtra(EXTRA_TEXT2, coverlink);
+         intent1.putExtra(EXTRA_TEXT3, authorname);
+         intent1.putExtra(EXTRA_TEXT4, category);
+         intent1.putExtra(EXTRA_TEXT5, noofpages);
+         intent1.putExtra(EXTRA_TEXT6, year);
+         intent1.putExtra(EXTRA_TEXT7, amazon_redirect_url);
+         intent1.putExtra(EXTRA_TEXT8, author_link);
+         intent1.putExtra(EXTRA_TEXT9, five_star_rating);
+         intent1.putExtra(EXTRA_TEXT10, four_star_rating);
+         intent1.putExtra(EXTRA_TEXT11, booklinks);
+         intent1.putExtra(EXTRA_TEXT12, onr_star_rating);
+         intent1.putExtra(EXTRA_TEXT13, rating_count);
+         // intent1.putExtra(EXTRA_TEXT14,review_count);
+         // intent1.putExtra(EXTRA_TEXT15,worldcat_redirect_link);
+         intent1.putExtra(EXTRA_TEXT16, three_star_rating);
+         intent1.putExtra(EXTRA_TEXT17, toe_star_rating);
+         intent1.putExtra(EXTRA_TEXT18,"MAIN1");
+         startActivity(intent1);
      }
 
 
