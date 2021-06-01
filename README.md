@@ -1,4 +1,4 @@
-# Bookmine
+# Bookmine Android Application
 
 Download url : https://play.google.com/store/apps/details?id=com.hny.bookmine
 
