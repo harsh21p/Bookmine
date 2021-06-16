@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bookmine</string>
+    <string name="welcome">Welcome</string>
 </resources>
