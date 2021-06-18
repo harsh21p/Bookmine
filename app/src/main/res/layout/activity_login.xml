@@ -10,7 +10,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".login"
-    android:background="#fff"
     android:orientation="vertical"
     android:padding="20dp">
     <ImageView
@@ -76,19 +75,21 @@
             android:background="#00000000"
             android:layout_margin="5dp"
             android:text="Forget Password?"
-            android:textColor="@color/black"
+            android:textColor="#757373"
             android:layout_gravity="right"
+            android:fontFamily="@font/alice"
+            android:textStyle="bold"
             android:elevation="0dp"/>
-       <Button
-           android:id="@+id/login_btn"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:background="#000000"
-           android:textColor="#fff"
-           android:text="Go"
-           android:layout_marginTop="5dp"
-           android:layout_marginBottom="5dp"
-           />
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="#000000"
+            android:text="Go"
+            android:textColor="#fff" />
         <Button
             android:id="@+id/signup_screen"
             android:layout_width="200dp"
@@ -96,9 +97,10 @@
             android:background="#00000000"
             android:layout_margin="5dp"
             android:text="New User? SIGN UP"
-            android:textColor="@color/black"
-            android:fontFamily="@font/antic"
+            android:textColor="#757373"
+            android:fontFamily="@font/alice"
             android:layout_gravity="center"
+            android:textStyle="bold"
             android:elevation="0dp"/>
 
     </LinearLayout>
