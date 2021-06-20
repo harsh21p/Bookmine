@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,6 +30,7 @@ Button regBtn, already;
 TextInputLayout regName, regUsername,  regEmail, regPassword, regNumber;
 FirebaseDatabase rootNode;
 DatabaseReference reference;
+ProgressBar progressBar1;
 FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -46,6 +48,7 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
         regName = findViewById(R.id.name);
         regPassword = findViewById(R.id.password);
         regNumber = findViewById(R.id.number);
+        progressBar1 = findViewById(R.id.progressBar1);
 
 
         already.setOnClickListener(new View.OnClickListener() {
@@ -152,8 +155,8 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
         if(!validateName() | !validatePassword() | !validatePhoneNo() | !validateEmail() | !validateUsername()){
             return;
         }
-
-
+        regBtn.setVisibility(View.INVISIBLE);
+        progressBar1.setVisibility(View.VISIBLE);
         // Get all the values
         String name = regName.getEditText().getText().toString();
         String username = regUsername.getEditText().getText().toString();
@@ -174,12 +177,15 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
                             UserHelperClass helperClass = new UserHelperClass(username, name, password, email, phnnumber);
                             reference.child(phnnumber).setValue(helperClass);
                             Toast.makeText(Signup.this,"Registeration Successful",Toast.LENGTH_SHORT).show();
+                            regBtn.setVisibility(View.VISIBLE);
+                            progressBar1.setVisibility(View.INVISIBLE);
                             Intent intent = new Intent(Signup.this,login.class);
-
                             startActivity(intent);
 
                         } else {
                             // If sign in fails, display a message to the user.
+                            regBtn.setVisibility(View.VISIBLE);
+                            progressBar1.setVisibility(View.INVISIBLE);
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(Signup.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ Button callsignup,login_button;
 ImageView image;
 TextInputLayout username, password;
 TextView sloganText,logoText;
+ProgressBar  progressBar;
 FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -51,6 +53,7 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
         password = findViewById(R.id.password);
         username = findViewById(R.id.username);
         login_button = findViewById(R.id.login_btn);
+        progressBar = findViewById(R.id.progressBar);
 
         callsignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +75,8 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     private void loginme(View view){
 
+        login_button.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         if(!validatePassword() | !validateUsername()){
             return;
         }
@@ -86,13 +91,19 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(login.this,"Login Successful",Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            login_button.setVisibility(View.VISIBLE);
                             Intent intent = new Intent(login.this,MainActivity.class);
+
 
                             startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
+                            progressBar.setVisibility(View.INVISIBLE);
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(login.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
+
+                            login_button.setVisibility(View.VISIBLE);
 
                         }
                     }
@@ -103,6 +114,9 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String val = username.getEditText().getText().toString();
         if(val.isEmpty()){
             username.setError("Field cannot be empty");
+
+            login_button.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
             return false;
         }
         else{
@@ -116,6 +130,8 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String val = password.getEditText().getText().toString();
         if (val.isEmpty()) {
             password.setError("Field cannot be empty");
+            login_button.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
             return false;
         } else {
             password.setError(null);
