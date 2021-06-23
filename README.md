@@ -7,7 +7,7 @@ Description :
 Explore collection of books and get links, ratings and references from where you can read, buy and obtain information about author.
 Our collection includes:- Action, Academics, Fiction, Fantasy, Drama, Historical, Art, Political, Romance, Science Fiction, Biography, Humor, Horror, War, Travel, Mystery, etc.
 
-Database : Firebase Cloud Firestore
+Database : Firebase Cloud Firestore , Firebase authentication , Firebase Realtime Database
 
 
 ![My Post8](https://user-images.githubusercontent.com/46632001/120571819-885de680-c438-11eb-8755-f85d53485202.jpg)
