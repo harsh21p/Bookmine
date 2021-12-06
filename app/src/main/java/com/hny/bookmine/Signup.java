@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
 
 import static android.content.ContentValues.TAG;
+import static android.widget.Toast.*;
 
 public class Signup extends AppCompatActivity {
     //Variables
@@ -158,25 +159,17 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
         regBtn.setVisibility(View.INVISIBLE);
         progressBar1.setVisibility(View.VISIBLE);
         // Get all the values
-        String name = regName.getEditText().getText().toString();
-        String username = regUsername.getEditText().getText().toString();
+
         String password = regPassword.getEditText().getText().toString();
         String email = regEmail.getEditText().getText().toString();
-        String phnnumber = regNumber.getEditText().getText().toString();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
 
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            rootNode = FirebaseDatabase.getInstance();
-                            reference = rootNode.getReference("users");
-                            UserHelperClass helperClass = new UserHelperClass(username, name, password, email, phnnumber);
-                            reference.child(phnnumber).setValue(helperClass);
-                            Toast.makeText(Signup.this,"Registeration Successful",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Signup.this,"Registeration Successful", LENGTH_SHORT).show();
                             regBtn.setVisibility(View.VISIBLE);
                             progressBar1.setVisibility(View.INVISIBLE);
                             Intent intent = new Intent(Signup.this,login.class);
@@ -187,8 +180,8 @@ FirebaseAuth mAuth = FirebaseAuth.getInstance();
                             regBtn.setVisibility(View.VISIBLE);
                             progressBar1.setVisibility(View.INVISIBLE);
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(Signup.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            makeText(Signup.this, "Authentication failed.",
+                                    LENGTH_SHORT).show();
                         }
                     }
                 });
